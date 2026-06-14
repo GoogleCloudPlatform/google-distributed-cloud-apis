@@ -1,0 +1,41 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//build/rules:proto_gen.bzl", "gen_proto_go_code")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "kms_proto",
+    srcs = [
+        "kms.proto",
+    ],
+    deps = [
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+go_proto_library(
+    name = "kms_go_proto",
+    compilers = ["//build/proto:go_grpc"],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1alpha1/proto",
+    proto = ":kms_proto",
+    deps = ["@org_golang_google_genproto_googleapis_api//annotations"],
+)
+
+go_library(
+    name = "proto",
+    embed = [":kms_go_proto"],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1alpha1/proto",
+)
+
+gen_proto_go_code(
+    name = "kms_go_proto_gen_srcs",
+    srcs = [":kms_go_proto"],
+    outs = [
+        "kms.pb.go",
+    ],
+)

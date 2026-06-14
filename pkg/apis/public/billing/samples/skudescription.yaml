@@ -1,0 +1,51 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https:#www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Onetime fee for "GDCH Tactical Edge: Loss / Damage / Destruction [US]"
+apiVersion: billing.gdc.goog/v1
+kind: SKUDescription
+metadata:
+  name: 34a1-f9b1-dc13
+  namespace: billing-system
+skuID: 34A1-F9B1-DC13
+invoiceDescription: "GDCH Tactical Edge: Loss / Damage / Destruction [US]"
+description: "Fees paid for loss or damage or request to destruct the GDCH Tactical edge Device"
+category: edge
+deprecationTime:
+pricingInfo:
+  - unitPrice:
+      currencyCode: USD
+      units: 1118250
+      nanos: 375000000
+    usageUnit: count
+    effectiveTime: "2024-01-01T00:00:00-08:00"
+---
+# Onetime fee for "GDCH Tactical Edge: Device Pickup [US]"
+apiVersion: billing.gdc.goog/v1
+kind: SKUDescription
+metadata:
+  name: 53f3-f2f8-54a9
+  namespace: billing-system
+skuID: 53F3-F2F8-54A9
+invoiceDescription: "GDCH Tactical Edge: Device Pickup [US]"
+description: "Pickup of Tactical Edge device from GSS location in Thornton, CO"
+category: edge
+deprecationTime:
+pricingInfo:
+  - unitPrice:
+      currencyCode: USD
+      units: 399
+      nanos: 375000000
+    usageUnit: count
+    effectiveTime: "2024-01-01T00:00:00-08:00"

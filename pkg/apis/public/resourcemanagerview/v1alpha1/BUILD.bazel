@@ -1,0 +1,47 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1alpha1_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "projectview_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1alpha1_api",
+    targets = [":v1alpha1_typedata"],
+)
+
+go_library(
+    name = "v1alpha1",
+    srcs = [
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "projectview_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanagerview/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

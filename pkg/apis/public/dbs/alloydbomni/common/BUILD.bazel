@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "common",
+    srcs = ["db_common.go"],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/alloydbomni/common",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/golang.org/x/mod/semver",
+        "//vendor/k8s.io/api/core/v1:core",
+    ],
+)

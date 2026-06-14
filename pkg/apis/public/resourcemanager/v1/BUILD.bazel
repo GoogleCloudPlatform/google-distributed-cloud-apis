@@ -1,0 +1,158 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "common_types.go",
+        "condition_const.go",
+        "doc.go",
+        "groupversion_info.go",
+        "organizationrole_types.go",
+        "organizationrolebinding_types.go",
+        "project_types.go",
+        "projectbinding_types.go",
+        "projectrole_types.go",
+        "projectrolebinding_types.go",
+        "projectserviceaccount_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/types",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "rm_v1_typedata",
+    srcs = [
+        "common_types.go",
+        "condition_const.go",
+        "doc.go",
+        "groupversion_info.go",
+        "project_types.go",
+        "projectbinding_types.go",
+        "projectserviceaccount_types.go",
+    ],
+    visibility = [
+        "//oc/iam/subs/org-admin-cm/manifests/testdeps:__subpackages__",
+        "//oc/rm:__subpackages__",
+    ],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/types",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "iam_v1_typedata",
+    srcs = [
+        "common_types.go",
+        "condition_const.go",
+        "doc.go",
+        "groupversion_info.go",
+        "organizationrole_types.go",
+        "organizationrolebinding_types.go",
+        "projectrole_types.go",
+        "projectrolebinding_types.go",
+    ],
+    visibility = ["//oc/iam:__subpackages__"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/types",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "v1_gdce_typedata",
+    srcs = [
+        "common_types.go",
+        "doc.go",
+        "groupversion_info.go",
+        "project_types.go",
+        "projectbinding_types.go",
+        "projectrole_types.go",
+        "projectrolebinding_types.go",
+        "projectserviceaccount_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":v1_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "resourcemanager",
+    srcs = [
+        "annotations.go",
+        "common_types.go",
+        "condition_const.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "label_consts.go",
+        "organizationrole_conversion.go",
+        "organizationrole_types.go",
+        "organizationrolebinding_conversion.go",
+        "organizationrolebinding_types.go",
+        "project_types.go",
+        "projectbinding_conversion.go",
+        "projectbinding_types.go",
+        "projectrole_conversion.go",
+        "projectrole_types.go",
+        "projectrolebinding_conversion.go",
+        "projectrolebinding_types.go",
+        "projectserviceaccount_conversion.go",
+        "projectserviceaccount_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/labels",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/types",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/conversion",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "resourcemanager_test",
+    srcs = ["projectbinding_types_test.go"],
+    embed = [":resourcemanager"],
+    deps = ["//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta"],
+)

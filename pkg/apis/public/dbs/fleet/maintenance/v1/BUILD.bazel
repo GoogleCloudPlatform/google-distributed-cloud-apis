@@ -1,0 +1,47 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "maintenance_typedata",
+    srcs = [
+        "groupversion_info.go",
+        "maintenancepolicy.go",
+        "maintenancepolicybinding.go",
+        "time.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "maintenance_api",
+    targets = [":maintenance_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "maintenance",
+    srcs = [
+        "groupversion_info.go",
+        "maintenancepolicy.go",
+        "maintenancepolicybinding.go",
+        "time.go",
+        "zz_generated.deepcopy.go",  # keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/maintenance/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

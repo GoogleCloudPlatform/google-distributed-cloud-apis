@@ -1,0 +1,235 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package goog.gdc.kms.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+option csharp_namespace = "Goog.Gdc.Kms.V1";
+option go_package = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1/proto;kms";
+option ruby_package = "Goog::Gdc::Kms::V1";
+option java_package = "goog.gdc.kms.v1";
+option java_multiple_files = true;
+option java_outer_classname = "KmsProto";
+option objc_class_prefix = "KMS";
+option php_namespace = "Goog\\Gdc\\Kms\\V1";
+
+// CryptoOperationsService provides cryptographic operations for the
+// 'kms.gdc.goog' Kubernetes Custom Resources.
+service CryptoOperationsService {
+  // Encrypts data, so that it can only be recovered by a call to Decrypt.
+  //
+  // https://linter.aip.dev/136/http-name-variable
+  // (-- api-linter: core::0136::http-name-variable=disabled
+  //     aip.dev/not-precedent: The AeadKey is a first-class, already-created
+  //     resource. This verb uses the AeadKey but acts on data that is not
+  //     part of the resource hierarchy. --)
+  //
+  // https://linter.aip.dev/136/verb-noun
+  // (-- api-linter: core::0136::verb-noun=disabled
+  //     aip.dev/not-precedent: EncryptData would be repetative and potentially
+  //     confusing as 'Data' is not in the resource hierarchy. --)
+  rpc Encrypt(EncryptRequest) returns (EncryptResponse) {
+    option (google.api.http) = {
+      post: "/v1/{name=namespaces/*/aeadKeys/*}:encrypt"
+      body: "*"
+    };
+  }
+
+  // Decrypts data that was protected by Encrypt.
+  //
+  // https://linter.aip.dev/136/http-name-variable
+  // (-- api-linter: core::0136::http-name-variable=disabled
+  //     aip.dev/not-precedent: The AeadKey is a first-class, already-created
+  //     resource. This verb uses the AeadKey but acts on data that is not
+  //     part of the resource hierarchy. --)
+  //
+  // https://linter.aip.dev/136/verb-noun
+  // (-- api-linter: core::0136::verb-noun=disabled
+  //     aip.dev/not-precedent: DecryptData would be repetative and potentially
+  //     confusing as 'Data' is not in the resource hierarchy. --)
+  rpc Decrypt(DecryptRequest) returns (DecryptResponse) {
+    option (google.api.http) = {
+      post: "/v1/{name=namespaces/*/aeadKeys/*}:decrypt"
+      body: "*"
+    };
+  }
+
+  // Sign data with the specified key.
+  //
+  // https://linter.aip.dev/136/http-name-variable
+  // (-- api-linter: core::0136::http-name-variable=disabled
+  //     aip.dev/not-precedent: The SigningKey is a first-class, already-created
+  //     resource. This verb uses the SigningKey but acts on data that is not
+  //     part of the resource hierarchy. --)
+  //
+  // https://linter.aip.dev/136/verb-noun
+  // (-- api-linter: core::0136::verb-noun=disabled
+  //     aip.dev/not-precedent: SignData would be repetative and potentially
+  //     confusing as 'Data' is not in the resource hierarchy. --)
+  rpc Sign(SignRequest) returns (SignResponse) {
+    option (google.api.http) = {
+      post: "/v1/{name=namespaces/*/signingKeys/*}:sign"
+      body: "*"
+    };
+  }
+
+  // Generate a key of a defined type, wrapped by the specified key.
+  //
+  // https://linter.aip.dev/136/http-name-variable
+  // (-- api-linter: core::0136::http-name-variable=disabled
+  //     aip.dev/not-precedent: The SigningKey is a first-class, already-created
+  //     resource. This verb uses the SigningKey but acts on data that is not
+  //     part of the resource hierarchy. --)
+  rpc GenerateDataKey(GenerateDataKeyRequest) returns (GenerateDataKeyResponse) {
+    option (google.api.http) = {
+      post: "/v1/{name=namespaces/*/aeadKeys/*}:generatedatakey"
+      body: "*"
+    };
+  }
+}
+
+// Request message for [CryptoOperationsService.Encrypt][].
+message EncryptRequest {
+  // The resource name of the [AeadKey][] to use for encryption in the format
+  // `namespaces/*/aeadKeys/*`.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // The data to encrypt. The length of the plaintext field must be no larger than 64KiB.
+  bytes plaintext = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // Optional data that, if specified, must also be provided during decryption
+  // through [DecryptRequest.additional_authenticated_data][]. The length of the
+  // additional_authenticated_data field must be no larger than 64KiB.
+  bytes additional_authenticated_data = 3 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+};
+
+// Response message for [CryptoOperationsService.Encrypt][].
+message EncryptResponse {
+  // The resource name of the [AeadKey][] to use for encryption in the format
+  // `namespaces/*/aeadKeys/*`.
+  string name = 1;
+
+  // The encrypted data.
+  bytes ciphertext = 2;
+}
+
+// Request message for [CryptoOperationsService.Decrypt][].
+message DecryptRequest {
+  // The resource name of the [AeadKey][] to use for decryption in the format
+  // `namespaces/*/aeadKeys/*`.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // The encrypted data originally returned in [EncryptResponse.ciphertext][]. The length of the ciphertext
+  // field must be no larger than 64KiB.
+  bytes ciphertext = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // Optional data that must match the data originally supplied in
+  // [EncryptRequest.additional_authenticated_data][]. The length of the additional_authenticated_data
+  // field must be no larger than 64KiB.
+  bytes additional_authenticated_data = 3 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+}
+
+// Response message for [CryptoOperationsService.Decrypt][].
+message DecryptResponse {
+  // The decrypted data originally supplied in [EncryptRequest.plaintext][].
+  bytes plaintext = 1;
+}
+
+// Request message for [CryptoOperationsService.Sign][].
+message SignRequest {
+  // The resource name of the [SigningKey][] to use for signing in the format
+  // `namespaces/*/signingKeys/*`.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // The raw data to sign. The length of data
+  // must be no larger than 64KiB.
+  // Only one of data or digest should be set.
+  optional bytes data = 2 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+
+  // The pre-computed digest to sign. If set, the server will sign this
+  // digest directly instead of hashing the data.
+  // Only one of data or digest should be set.
+  optional bytes digest = 3 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+}
+
+// Response message for [CryptoOperationsService.Sign][].
+message SignResponse {
+  // The signature value.
+  bytes signature = 1;
+}
+
+// Request message for [CryptoOperationsService.GenerateDataKey][].
+message GenerateDataKeyRequest {
+  // The resource name of the key encryption key [AeadKey][] to use for encryption in the format
+  // `namespaces/*/aeadKeys/*`.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // The type of key to be generated.
+  SupportedCryptoAlgs key_type = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // Optional data that, if specified, must also be provided during decryption
+  // through [DecryptRequest.additional_authenticated_data][]. The length of the
+  // additional_authenticated_data field must be no larger than 64KiB.
+  bytes additional_authenticated_data = 3 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+};
+
+// Response message for [CryptoOperationsService.GenerateDataKey][].
+message GenerateDataKeyResponse {
+  // The generated key of type [GenerateDataKeyRequest.key_type][] wrapped by the key encryption key specified in [GenerateDataKeyRequest.name][].
+  bytes wrapped_dek = 1;
+}
+
+// Defines the currently supported crypto algorithms.
+enum SupportedCryptoAlgs {
+  // The names of supported algorithms.
+  SUPPORTED_CRYPTO_ALGS_UNSPECIFIED = 0;
+  // (-- api-linter: core::0192::has-comments=disabled
+  //     aip.dev/not-precedent: We need to do this as it would be repetative. --)
+  AES_256_GCM = 1;
+}
+
+// Defines the primary identifier for a KMS key.
+message KeyIdentifier {
+  // Deterministic CKA_LABEL hash used to identify the key in the HSM.
+  string unique_integrity_hash = 1 [(google.api.field_behavior) = REQUIRED];
+}
+

@@ -1,0 +1,86 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "ft_api_typedata",
+    srcs = [
+        "doc.go",
+        "flowtagger_spec.go",
+        "flowtagger_types.go",
+        "flowtaggerreplica_types.go",
+        "groupversion_info.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/private/resourcemanager/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/networking/v1alpha1",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "ft_replica_typedata",
+    srcs = [
+        "doc.go",
+        "flowtagger_spec.go",
+        "flowtaggerreplica_types.go",
+        "groupversion_info.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/private/resourcemanager/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/networking/v1alpha1",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+mux_api_package(
+    name = "api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "FlowTagger",
+    ],
+    targets = [
+        ":ft_api_typedata",
+    ],
+)
+
+go_library(
+    name = "v1alpha1",
+    srcs = [
+        "doc.go",
+        "flowtagger_spec.go",
+        "flowtagger_types.go",
+        "flowtaggerreplica_types.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  #keep
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/networking/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/networking/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

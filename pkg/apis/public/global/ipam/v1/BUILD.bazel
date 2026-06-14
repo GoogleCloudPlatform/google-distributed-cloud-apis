@@ -1,0 +1,43 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "api_typedata",
+    srcs = [
+        "doc.go",
+        "global_subnet_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/ipam/v1:ipam",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":api_typedata"],
+)
+
+go_library(
+    name = "ipam",
+    srcs = [
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "global_subnet_types.go",
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/ipam/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/ipam/v1:ipam",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

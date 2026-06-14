@@ -1,0 +1,53 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "deepcopygen")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "backupplan_typedata",
+    srcs = [
+        "backupplan.go",
+        "omnisvc_backupplan.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/enterprise/common",
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+    ],
+)
+
+deepcopygen(
+    name = "backupplan_deepcopy",
+    targets = [":backupplan_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+write_source_files(
+    name = "backupplan_deepcopy_copy",
+    files = {
+        "zz_generated.deepcopy.go": ":backupplan_deepcopy",
+    },
+)
+
+go_library(
+    name = "backupplan",
+    srcs = [
+        "backupplan.go",
+        "omnisvc_backupplan.go",
+        "zz_generated.deepcopy.go",  # keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/backupplan/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/enterprise/common",
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+    ],
+)

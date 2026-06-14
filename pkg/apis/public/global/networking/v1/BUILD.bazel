@@ -1,0 +1,198 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "lb_api_typedata",
+    srcs = [
+        "backendservice_spec.go",
+        "backendservice_type.go",
+        "backendservicepolicy_type.go",
+        "backendservicepolicyreplica_type.go",
+        "backendservicereplica_type.go",
+        "doc.go",
+        "forwardingruleexternal_type.go",
+        "forwardingruleexternalreplica_type.go",
+        "forwardingruleinternal_type.go",
+        "forwardingruleinternalreplica_type.go",
+        "healthcheck_type.go",
+        "healthcheckreplica_type.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/networking/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/ipam/v1:ipam",
+        "//pkg/apis/public/networking/v1:networking",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "lb_replica_typedata",
+    srcs = [
+        "backendservice_spec.go",
+        "backendservicepolicyreplica_type.go",
+        "backendservicereplica_type.go",
+        "doc.go",
+        "forwardingruleexternalreplica_type.go",
+        "forwardingruleinternalreplica_type.go",
+        "healthcheckreplica_type.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/networking/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/ipam/v1:ipam",
+        "//pkg/apis/public/networking/v1:networking",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "pnp_api_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "projectnetworkpolicy_types.go",
+        "projectnetworkpolicyreplica_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/networking/v1:networking",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "pnp_replica_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "projectnetworkpolicyreplica_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/networking/v1:networking",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "dns_api_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "manageddnszone_type.go",
+        "manageddnszonereplica_type.go",
+        "resourcerecordset_type.go",
+        "resourcerecordsetreplica_type.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "dns_replica_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "manageddnszonereplica_type.go",
+        "resourcerecordsetreplica_type.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+mux_api_package(
+    name = "api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "BackendService",
+        "BackendServicePolicy",
+        "ForwardingRuleExternal",
+        "ForwardingRuleInternal",
+        "HealthCheck",
+        "ManagedDNSZone",
+        "ProjectNetworkPolicy",
+        "ResourceRecordSet",
+    ],
+    targets = [
+        ":lb_api_typedata",
+        ":pnp_api_typedata",
+        ":dns_api_typedata",
+    ],
+)
+
+go_library(
+    name = "networking",
+    srcs = [
+        "backendservice_spec.go",
+        "backendservice_type.go",
+        "backendservicepolicy_type.go",
+        "backendservicepolicyreplica_type.go",
+        "backendservicereplica_type.go",
+        "doc.go",
+        "forwardingruleexternal_type.go",
+        "forwardingruleexternalreplica_type.go",
+        "forwardingruleinternal_type.go",
+        "forwardingruleinternalreplica_type.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  #keep
+        "groupversion_info.go",
+        "healthcheck_type.go",
+        "healthcheckreplica_type.go",
+        "manageddnszone_type.go",
+        "manageddnszonereplica_type.go",
+        "projectnetworkpolicy_types.go",
+        "projectnetworkpolicyreplica_types.go",
+        "resourcerecordset_type.go",
+        "resourcerecordsetreplica_type.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/networking/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/networking/v1:networking",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

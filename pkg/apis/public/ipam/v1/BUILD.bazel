@@ -1,0 +1,75 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+load("//build/rules/health:crd.bzl", "crd_status")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "annotations.go",
+        "constants.go",
+        "doc.go",
+        "labels.go",
+        "subnet_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":v1_typedata"],
+)
+
+go_library(
+    name = "ipam",
+    srcs = [
+        "annotations.go",
+        "constants.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "labels.go",
+        "subnet_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/ipam/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+# This is a normal healthy state for a subnet.
+crd_status(
+    name = "subnet_good_ready",
+    reason = "AllocationSucceeded",
+    status = True,
+    type = "Ready",
+    visibility = ["//visibility:public"],
+)
+
+# This is still a good state, and happens if the parent resource is exhausted.
+crd_status(
+    name = "subnet_good_not_enough_resource",
+    reason = "IPAMNoEnoughIPResource",
+    status = False,
+    type = "Ready",
+    visibility = ["//visibility:public"],
+)
+
+# This is still a good state, and happens if the subnet is a root and overlaps with another root.
+crd_status(
+    name = "subnet_good_overlaps",
+    reason = "IPOverlap",
+    status = False,
+    type = "Ready",
+    visibility = ["//visibility:public"],
+)

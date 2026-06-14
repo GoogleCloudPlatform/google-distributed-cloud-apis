@@ -1,0 +1,190 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package goog.gdc.security.pki.v1;
+
+import "google/api/annotations.proto";
+import "google/api/policy.proto";
+import "google/api/client.proto";
+import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security/pki/v1/proto;pki";
+option java_outer_classname = "CasProto";
+option java_multiple_files = true;
+option java_package = "goog.gdc.security.pki.v1";
+
+// CertificateAuthorityService provides services for managing certificate requests.
+service CertificateAuthorityService {
+    // Creates a certificate request to issue certificate.
+    rpc CreateCertificateRequest(CreateCertificateRequestRequest) returns (CertificateRequest) {
+      option (google.api.http) = {
+        post: "/v1/{parent=projects/*}/certificaterequests"
+        body: "certificate_request"
+      };
+      option (google.api.method_signature) = "parent,certificate_request";
+      option (google.api.method_policy) = {
+        request_policies {
+          selector: "parent"
+          resource_type: "RESOURCE, pki.security.gdc.goog/Project"
+          resource_permission: "pki.security.gdc.goog/certificaterequests.create"
+        }
+      };
+    }
+
+    // Creates a request to revoke a certificate.
+    rpc CreateRevokeCertificateRequest(CreateRevokeCertificateRequestRequest) returns (RevokeCertificateRequest) {
+      option (google.api.http) = {
+        post: "/v1/{parent=projects/*}/revokecertificaterequests"
+        body: "revoke_certificate_request"
+      };
+      option (google.api.method_signature) = "parent,revoke_certificate_request";
+      option (google.api.method_policy) = {
+        request_policies {
+          selector: "parent"
+          resource_type: "RESOURCE, pki.security.gdc.goog/Project"
+          resource_permission: "pki.security.gdc.goog/revokecertificaterequests.create"
+        }
+      };
+    }
+}
+
+// Request message for the CreateCertificate RPC.
+message CreateCertificateRequestRequest {
+  // The parent resource under which the certificate will be (conceptually) created.
+  // Format: "projects/*"
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "pki.security.gdc.goog/Project"
+  ];
+
+  // The details for the certificate to be created.
+  CertificateRequest certificate_request = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+// Details for requesting a new certificate.
+message CertificateRequest {
+    // The name of the certificate request.
+    string name = 1 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // A reference to the Certificate Authority (CA) that should issue the certificate.
+    string ca_ref = 2 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // A reference to the CA Pool that should issue the certificate.
+    // Exactly one of ca_ref or ca_pool_ref should be provided in the request.
+    string ca_pool_ref = 3 [(google.api.field_behavior) = OPTIONAL];
+
+    // A base64 encoded string of Certificate Signing Request (CSR) in PEM format.
+    bytes csr = 4 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // Optional: The requested time at which the certificate should become valid.
+    // If not specified, the CA will determine the validity start time.
+    // (-- api-linter: core::0140::prepositions=disabled
+    //     aip.dev/not-precedent: Use not_before to match with x509 certificate property --)
+    google.protobuf.Timestamp not_before_time = 5 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // Optional: The requested time at which the certificate should expire.
+    // If not specified, the CA will determine the validity end time based on its policy.
+    // (-- api-linter: core::0140::prepositions=disabled
+    //     aip.dev/not-precedent: Use not_after to match with x509 certificate property --)
+    google.protobuf.Timestamp not_after_time = 6 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // Optional: A template used to issue the certificate.
+    string certificate_template = 7 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // Optional: A base64 encoded string of a raw ASN.1 DER-encoded X.509 subject.
+    // If set, this raw subject will be used instead of the raw subject in the CSR
+    bytes subject_override = 8 [
+      (google.api.field_behavior) = OPTIONAL
+    ];
+
+    // The issued certificate in PEM format. Including intermediate certificate chain if any.
+    bytes certificate = 20 [
+      (google.api.field_behavior) = OUTPUT_ONLY
+    ];
+
+    // The root CA certificate in PEM format.
+    bytes ca_certificate = 21 [
+      (google.api.field_behavior) = OUTPUT_ONLY
+    ];
+}
+
+// Request message for the CreateRevokeCertificateRequest RPC.
+message CreateRevokeCertificateRequestRequest {
+  // The parent resource under which the revocation is requested.
+  // Format: "projects/*"
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "pki.security.gdc.goog/Project"
+  ];
+
+  // The details for the certificate revocation.
+  RevokeCertificateRequest revoke_certificate_request = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+// Details for revoking a certificate.
+message RevokeCertificateRequest {
+  // The certificate to be revoked in PEM format.
+  bytes certificate = 1 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+
+  // The reason for revocation.
+  RevocationReason reason = 2 [
+    (google.api.field_behavior) = OPTIONAL
+  ];
+}
+
+// Reason for certificate revocation.
+enum RevocationReason {
+  // (-- api-linter: core::0126::unspecified=disabled
+  //     aip.dev/not-precedent: Required to match with existing KRM unspecified mapping. --)
+  // The revocation reason is unspecified.
+  UNSPECIFIED = 0;
+  // The certificate's private key has been compromised.
+  KEY_COMPROMISE = 1;
+  // The CA's private key has been compromised.
+  CA_COMPROMISE = 2;
+  // The subject's name or other affiliation information has changed.
+  AFFILIATION_CHANGED = 3;
+  // The certificate has been superseded by a new one.
+  SUPERSEDED = 4;
+  // The certificate is no longer needed because operations have ceased.
+  CESSATION_OF_OPERATION = 5;
+  // The certificate is temporarily suspended (held).
+  CERTIFICATE_HOLD = 6;
+  // The privileges granted by the certificate have been withdrawn.
+  PRIVILEGE_WITHDRAWN = 7;
+  // The Attribute Authority's key has been compromised.
+  AA_COMPROMISE = 8;
+}

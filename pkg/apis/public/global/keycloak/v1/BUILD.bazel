@@ -1,0 +1,72 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "api_typedata",
+    srcs = [
+        "doc.go",
+        "managedkeycloak_types.go",
+        "managedkeycloakreplica_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/keycloak/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/private/ais/v2alpha1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//pkg/identity",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+mux_api_package(
+    name = "api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "ManagedKeycloak",
+    ],
+    targets = [":api_typedata"],
+)
+
+kubebuilder_analyze(
+    name = "replica_typedata",
+    srcs = [
+        "doc.go",
+        "managedkeycloakreplica_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/private/ais/v2alpha1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//pkg/identity",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+go_library(
+    name = "keycloak",
+    srcs = [
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  #keep
+        "groupversion_info.go",
+        "managedkeycloak_types.go",
+        "managedkeycloakreplica_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/keycloak/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

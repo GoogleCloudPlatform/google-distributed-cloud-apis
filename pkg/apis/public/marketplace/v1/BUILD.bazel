@@ -1,0 +1,69 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+load("//build/rules/health:crd.bzl", "crd_status")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "marketplaceservice_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1:apiextensions",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":v1_typedata"],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "condition_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "marketplaceservice_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/marketplace/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1:apiextensions",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+# Ensure ready and not ready are consistent with condition_types.go.
+crd_status(
+    name = "ready",
+    reason = "DeploymentSuccess",
+    status = False,
+    type = "Deploying",
+    visibility = ["//visibility:public"],
+)
+
+crd_status(
+    name = "not_ready",
+    reason = "DeploymentFailure",
+    status = False,
+    type = "Deploying",
+    visibility = ["//visibility:public"],
+)

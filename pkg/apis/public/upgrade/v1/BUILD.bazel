@@ -1,0 +1,93 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "common_types.go",
+        "doc.go",
+        "groupversion_info.go",
+        "maintenancewindow_types.go",
+        "timer_types.go",
+        "upgradestrategy_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/github.com/Masterminds/semver/v3:semver",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":v1_typedata"],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "common_types.go",
+        "doc.go",
+        "groupversion_info.go",
+        "maintenancewindow_conversion.go",
+        "maintenancewindow_types.go",
+        "timer_types.go",
+        "upgradestrategy_types.go",
+        "zz_generated.deepcopy.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/upgrade/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/github.com/Masterminds/semver/v3:semver",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/conversion",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+filegroup(
+    name = "root_admin_types",
+    srcs = [
+        "common_types.go",
+        "doc.go",
+        "maintenancewindow_conversion.go",
+        "maintenancewindow_types.go",
+        "upgradestrategy_types.go",
+    ],
+    visibility = ["//pkg/apis/public/upgrade:__subpackages__"],
+)
+
+filegroup(
+    name = "org_admin_types",
+    srcs = [
+        "common_types.go",
+        "doc.go",
+        "maintenancewindow_conversion.go",
+        "maintenancewindow_types.go",
+    ],
+    visibility = ["//pkg/apis/public/upgrade:__subpackages__"],
+)
+
+go_test(
+    name = "upgrade_test",
+    srcs = ["timer_types_test.go"],
+    embed = [":upgrade"],
+    deps = ["//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta"],
+)
+
+# Gazelle will only generate "upgrade_test" and embed ":upgrade" for this package (https://github.com/bazel-contrib/bazel-gazelle/blob/59b23bba088ad04d59aa636e4a3e992660d1fc33/language/go/package.go#L192)
+alias(
+    name = "upgrade",
+    actual = ":v1",
+)

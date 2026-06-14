@@ -1,0 +1,86 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "image_api_typedata",
+    srcs = [
+        "doc.go",
+        "vm_image_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/virtualmachine/v1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "instance_group_api_typedata",
+    srcs = [
+        "doc.go",
+        "managed_instance_group_types.go",
+        "vm_template_replica_types.go",
+        "vm_template_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/virtualmachine/v1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "replica_typedata",
+    srcs = [
+        "doc.go",
+        "vm_template_replica_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/virtualmachine/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/virtualmachine/v1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+mux_api_package(
+    name = "v1",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = ["VirtualMachineTemplate"],
+    targets = [
+        ":image_api_typedata",
+        ":instance_group_api_typedata",
+    ],
+)
+
+go_library(
+    name = "virtualmachine",
+    srcs = [
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "group_version.go",
+        "managed_instance_group_types.go",
+        "vm_image_types.go",
+        "vm_template_replica_types.go",
+        "vm_template_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/virtualmachine/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/virtualmachine/v1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

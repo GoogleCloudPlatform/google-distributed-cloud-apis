@@ -1,0 +1,62 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+exports_files([
+    "generated.mux.go.tpl",
+])
+
+kubebuilder_analyze(
+    name = "v1alpha1_typedata",
+    srcs = [
+        "mux_types.go",
+        "rollout_types.go",
+        "status_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+    ],
+)
+
+api_package(
+    name = "v1alpha1_api",
+    targets = [":v1alpha1_typedata"],
+)
+
+go_library(
+    name = "v1alpha1",
+    srcs = [
+        "accessors.go",
+        "conditions.go",
+        "consts.go",
+        "generated.deepcopy.go",  # keep
+        "mux_types.go",
+        "rollout_types.go",
+        "status_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/common/global/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+    ],
+)
+
+go_test(
+    name = "v1alpha1_test",
+    srcs = [
+        "mux_test.go",
+        "status_test.go",
+    ],
+    embed = [":v1alpha1"],
+    deps = [
+        "//pkg/apis/common/v1:common",
+        "//vendor/github.com/google/go-cmp/cmp",
+        "//vendor/github.com/google/go-cmp/cmp/cmpopts",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)

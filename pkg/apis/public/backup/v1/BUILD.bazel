@@ -1,0 +1,114 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+filegroup(
+    name = "srcs",
+    srcs = glob(["*.go"]),
+    visibility = ["//visibility:public"],
+)
+
+# gazelle:exclude zz_generated.*.go
+
+BACKUP_V1_SRCS = glob(
+    ["*.go"],
+    exclude = [
+        "zz_generated.*.go",
+        "*_test.go",
+    ],
+)
+
+BACKUP_V1_DEPS = [
+    "//pkg/apis/core/v1alpha1",
+    "//pkg/apis/public/object/v1",
+    "//vendor/k8s.io/api/core/v1:core",
+    "//vendor/k8s.io/apimachinery/pkg/api/errors",
+    "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    "//vendor/k8s.io/apimachinery/pkg/runtime",
+    "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+    "//vendor/k8s.io/apimachinery/pkg/types",
+    "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+    "//vendor/sigs.k8s.io/controller-runtime/pkg/log",
+    "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+]
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = BACKUP_V1_SRCS,
+    visibility = ["//visibility:public"],
+    deps = BACKUP_V1_DEPS,
+)
+
+kubebuilder_analyze(
+    name = "clusterbackup_typedata",
+    srcs = BACKUP_V1_SRCS,
+    visibility = ["//visibility:public"],
+    deps = BACKUP_V1_DEPS,
+)
+
+kubebuilder_analyze(
+    name = "gpcbackup_typedata",
+    srcs = BACKUP_V1_SRCS,
+    visibility = ["//visibility:public"],
+    deps = BACKUP_V1_DEPS,
+)
+
+api_package(
+    name = "v1_api",
+    targets = [
+        ":v1_typedata",
+        ":clusterbackup_typedata",
+        ":gpcbackup_typedata",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "backup_types.go",
+        "backupplan_types.go",
+        "backuprepository_types.go",
+        "backuprepositorymanager_types.go",
+        "clusterbackup_types.go",
+        "clusterbackupplan_types.go",
+        "clusterbackuprepository_types.go",
+        "clusterrestore_types.go",
+        "clusterrestoreplan_types.go",
+        "clustervolumebackup_types.go",
+        "clustervolumerestore_types.go",
+        "common.go",
+        "common_types.go",
+        "deletebackuprequest_types.go",
+        "deleteclusterbackuprequest_types.go",
+        "doc.go",
+        "find.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "manualbackuprequest_types.go",
+        "manualclusterbackuprequest_types.go",
+        "manualclusterrestore_types.go",
+        "manualrestorerequest_types.go",
+        "objectstorage_types.go",
+        "restore_types.go",
+        "restoreplan_types.go",
+        "vmbackupjob_types.go",
+        "volumebackup_types.go",
+        "volumerestore_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/backup/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/object/v1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/api/errors",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/types",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/log",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

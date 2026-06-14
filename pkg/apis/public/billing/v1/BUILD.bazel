@@ -1,0 +1,62 @@
+# Billing APIs.
+
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "billingaccount_types.go",
+        "doc.go",
+        "groupversion_info.go",
+        "skudescription_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":v1_typedata"],
+)
+
+go_library(
+    name = "billing",
+    srcs = [
+        "billingaccount_types.go",
+        "condition_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "skudescription_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/billing/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "billing_test",
+    srcs = ["skudescription_types_test.go"],
+    embed = [":billing"],
+    deps = [
+        "//vendor/github.com/google/go-cmp/cmp",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)

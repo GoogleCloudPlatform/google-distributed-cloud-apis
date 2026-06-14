@@ -1,0 +1,108 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "api_typedata",
+    srcs = [
+        "doc.go",
+        "project_types.go",
+        "projectreplica_types.go",
+        "projectserviceaccount_types.go",
+        "projectserviceaccountreplica_types.go",
+        "tagkey_types.go",
+        "tagkeyreplica_types.go",
+        "tagvalue_types.go",
+        "tagvaluereplica_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+mux_api_package(
+    name = "api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "Project",
+        "ProjectServiceAccount",
+        "TagKey",
+        "TagValue",
+    ],
+    targets = [":api_typedata"],
+)
+
+kubebuilder_analyze(
+    name = "replica_typedata",
+    srcs = [
+        "doc.go",
+        "projectreplica_types.go",
+        "projectserviceaccountreplica_types.go",
+        "tagkeyreplica_types.go",
+        "tagvaluereplica_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+go_library(
+    name = "resourcemanager",
+    srcs = [
+        "consts.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  #keep
+        "groupversion_info.go",
+        "project_conversion.go",
+        "project_types.go",
+        "projectreplica_conversion.go",
+        "projectreplica_types.go",
+        "projectserviceaccount_types.go",
+        "projectserviceaccountreplica_types.go",
+        "tagkey_types.go",
+        "tagkeyreplica_types.go",
+        "tagvalue_types.go",
+        "tagvaluereplica_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/resourcemanager/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/conversion",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "resourcemanager_test",
+    srcs = [
+        "project_test.go",
+        "projectreplica_test.go",
+        "projectserviceaccount_test.go",
+        "projectserviceaccountreplica_test.go",
+    ],
+    embed = [":resourcemanager"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/github.com/google/go-cmp/cmp",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)

@@ -1,0 +1,83 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1alpha1_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "quota_types.go",
+        "quotadefinition_types.go",
+        "quotadefinitionreplica_types.go",
+        "quotainfo_types.go",
+        "quotametric_types.go",
+        "quotavalue_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "v1alpha1_replica_typedata",
+    srcs = [
+        "doc.go",
+        "quota_types.go",
+        "quotadefinitionreplica_types.go",
+        "quotametric_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+mux_api_package(
+    name = "v1alpha1_api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "QuotaDefinition",
+    ],
+    targets = [":v1alpha1_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "v1alpha1",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "quota_types.go",
+        "quotadefinition_types.go",
+        "quotadefinitionreplica_types.go",
+        "quotainfo_types.go",
+        "quotametric_types.go",
+        "quotavalue_types.go",
+        "zz_generated.deepcopy.go",  # keep
+        "zz_generated.mux.go",  #keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/quota/quotamanagement/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

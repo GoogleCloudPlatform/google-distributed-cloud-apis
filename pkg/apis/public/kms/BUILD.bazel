@@ -1,0 +1,8 @@
+filegroup(
+    name = "srcs",
+    srcs = [
+        "//pkg/apis/public/kms/v1:v1_api_srcs",
+        "//pkg/apis/public/kms/v1alpha1:v1alpha1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)

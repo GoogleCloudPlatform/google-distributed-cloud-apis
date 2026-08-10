@@ -1,0 +1,5 @@
+include /owners/upper_networking_OWNERS.google
+
+per-file v1/resourcerecordset*.go=file:/owners/dns_api_OWNERS.google
+per-file v1/manageddnszone*.go=file:/owners/dns_api_OWNERS.google
+per-file v1/zz_generated*.go=file:/owners/dns_api_OWNERS.google

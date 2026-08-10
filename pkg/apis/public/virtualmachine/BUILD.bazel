@@ -1,0 +1,45 @@
+load("//build/rules/controller_gen:kubebuilder.bzl", "crdgen")
+
+filegroup(
+    name = "v1alpha1_srcs",
+    srcs = [
+        "//pkg/apis/public/virtualmachine/v1alpha1:v1alpha1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+filegroup(
+    name = "v1_srcs",
+    srcs = [
+        "//pkg/apis/public/virtualmachine/v1:v1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+crdgen(
+    name = "mgmt_crds_yaml",
+    out = "public_mgmt_virtualmachine_crds.yaml",
+    targets = [
+        "//pkg/apis/public/virtualmachine/v1:mgmt_v1_typedata",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+crdgen(
+    name = "mgmt_image_crds_yaml",
+    out = "public_mgmt_virtualmachine_image_crds.yaml",
+    targets = [
+        "//pkg/apis/public/virtualmachine/v1:mgmt_image_v1_typedata",
+        "//pkg/apis/public/virtualmachine/v1alpha1:v1alpha1_typedata",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+crdgen(
+    name = "mgmt_backup_crds_yaml",
+    out = "public_mgmt_virtualmachine_backup_crds.yaml",
+    targets = [
+        "//pkg/apis/public/virtualmachine/v1:mgmt_backup_v1_typedata",
+    ],
+    visibility = ["//:__subpackages__"],
+)

@@ -1,0 +1,51 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+# generate with bazel run :api_deepcopy_copy
+
+kubebuilder_analyze(
+    name = "v1alpha1_typedata",
+    srcs = [
+        "doc.go",
+        "groupversion_info.go",
+        "managedsiemzoneconfig_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/siem/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "api",
+    targets = [":v1alpha1_typedata"],
+    visibility = ["//visibility:private"],
+)
+
+go_library(
+    name = "v1alpha1",
+    srcs = [
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "managedsiemzoneconfig_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/siem/v1alpha1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

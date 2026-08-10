@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "observability",
+    srcs = ["observability_types.go"],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/observability/v1",
+    visibility = ["//visibility:public"],
+)

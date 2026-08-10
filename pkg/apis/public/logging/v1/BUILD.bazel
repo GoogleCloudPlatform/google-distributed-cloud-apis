@@ -1,0 +1,95 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "auditloginventory_types.go",
+        "common_types.go",
+        "groupversion_info.go",
+        "loggingrule_types.go",
+        "loggingtarget_types.go",
+        "siemorgforwarder_types.go",
+        "siemprojectforwarder_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/cluster-operators/logmon-operator/api/v1alpha1",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "mgmt_v1_typedata",
+    srcs = [
+        "auditloginventory_types.go",
+        "common_types.go",
+        "groupversion_info.go",
+        "loggingrule_types.go",
+        "loggingtarget_types.go",
+        "siemorgforwarder_types.go",
+        "siemprojectforwarder_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/cluster-operators/logmon-operator/api/v1alpha1",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":mgmt_v1_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "auditloginventory_conversion.go",
+        "auditloginventory_types.go",
+        "common_types.go",
+        "constants.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "loggingrule_conversion.go",
+        "loggingrule_types.go",
+        "loggingrule_validation.go",
+        "loggingtarget_conversion.go",
+        "loggingtarget_types.go",
+        "siemorgforwarder_types.go",
+        "siemprojectforwarder_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/api/errors",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/util/validation/field",
+        "//vendor/sigs.k8s.io/cluster-operators/logmon-operator/api/v1alpha1",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/conversion",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "logging_test",
+    srcs = ["loggingrule_validation_test.go"],
+    embed = [":v1"],  # keep
+    deps = ["//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta"],
+)

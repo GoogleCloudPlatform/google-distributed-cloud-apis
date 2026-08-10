@@ -1,0 +1,253 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package goog.gdc.logging.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1/proto;logging";
+option java_outer_classname = "ServicesProto";
+option java_multiple_files = true;
+option java_package = "goog.gdc.logging.v1";
+
+// Provides operations for logs in the time series database.
+service Logs {
+  // Lists all the labels for log streams in the time series database that match
+  // the request conditions.
+  rpc ListLabels(ListLabelsRequest) returns (ListLabelsResponse) {
+    option (google.api.http) = {
+      get: "/v1/projects/{parent=project}/labels"
+    };
+    option (google.api.method_signature) = "parent";
+  }
+
+// Lists all label values in the time series database that match the request conditions.
+// (-- api-linter: core::0132::method-signature=disabled
+// A project is not sufficient to uniquely identify
+// a user's query to list label values, as Loki acts as a timeseries db with
+// logs separated by Project and Label keys. A project/label combination is
+// required. --)
+  rpc ListLabelValues(ListLabelValuesRequest) returns (ListLabelValuesResponse) {
+    option (google.api.http) = {
+      get: "/v1/projects/{parent=project}/labels/{label=label}/values"
+    };
+    option (google.api.method_signature) = "parent,label";
+  }
+
+  // Lists all logs across all times series that match the request conditions.
+  rpc ListLogs(ListLogsRequest) returns (ListLogsResponse) {
+    option (google.api.http) = {
+      get: "/v1/projects/{parent=project}/logs"
+    };
+    option (google.api.method_signature) = "parent";
+  }
+}
+
+// Request message to get a list of log stream labels.
+message ListLabelsRequest {
+  // The project from which to list labels from.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "logging.gdch.com/Project"
+  ];
+
+  // The maximum number of values to return. The service might return fewer values than
+  // what this field specifies.
+  //
+  // If unspecified, at most 100 labels will be returned.
+  // The maximum value is `1000`; values above `1000` are limited to `1000`.
+  int32 page_size = 2;
+
+  // A page token, received from a previous `ListLabels` call.
+  // Provide this value to retrieve the subsequent page.
+  //
+  // When paginating, all other parameters provided to `ListLabels` must match
+  // the call that provided the page token.
+  string page_token = 3;
+
+  // The earliest timestamp from which to list log stream labels.
+  // (-- api-linter: core::0132::request-unknown-fields=disabled
+  //     aip.dev/not-precedent: Labels are not a static set but can be added
+  //     or no longer used by producers as time goes on. As such, it makes sense
+  //     to be able to timebox the list of valid labels if searching for very
+  //     old log messages. --)
+  google.protobuf.Timestamp start_time = 4;
+
+  // The latest timestamp from which to list log stream labels.
+  // (-- api-linter: core::0132::request-unknown-fields=disabled
+  //     aip.dev/not-precedent: Labels are not a static set but can be added
+  //     or no longer used by producers as time goes on. As such, it makes sense
+  //     to be able to timebox the list of valid labels if searching for very
+  //     old log messages. --)
+  google.protobuf.Timestamp end_time = 5;
+}
+
+// Response message for getting list of log stream labels.
+message ListLabelsResponse {
+  // The labels found in the time series database.
+  repeated string labels = 1;
+
+    // A token, which can be sent as `page_token` to retrieve the next page.
+    // If this field is omitted, then no subsequent pages exist.
+    string next_page_token = 2;
+  }
+
+// Request message to list all values of a given label.
+message ListLabelValuesRequest {
+  // The name of the project from which labels are listed.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "logging.gdch.com/Project"
+  ];
+
+  // The name of the label from which values are listed.
+  // (-- api-linter: core::0132::request-unknown-fields=disabled
+  //     aip.dev/not-precedent: A project is not sufficient to uniquely identify
+  //     a user's query to list label values, as Loki acts as a timeseries db with
+  //     logs separated by Project and Label keys. A project/label combination is
+  //     required, and thus an unknown requester field must be specified. --)
+  string label = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // The maximum number of values to return. The service might return fewer values than
+  // what this field specifies.
+  //
+  // If unspecified, at most 100 logs are returned.
+  // The maximum value is `1000`. Values above `1000` are limited to
+  // `1000`.
+  int32 page_size = 3;
+
+  // A page token, received from a previous `ListLabelValues` call.
+  // Provide this value to retrieve the subsequent page.
+  //
+  // When paginating, all other parameters provided to `ListLabelValues` must match
+  // the call that provided the page token.
+  string page_token = 4;
+
+  // The earliest timestamp from which to list labels.
+  // (-- api-linter: core::0132::request-unknown-fields=disabled
+  //     aip.dev/not-precedent: Labels are not a static set but can be added
+  //     or no longer used by producers as time goes on. As such, it makes sense
+  //     to be able to timebox the list of valid labels if searching for very
+  //     old log messages. --)
+  google.protobuf.Timestamp start_time = 5;
+
+  // The latest timestamp from which to list labels.
+  // (-- api-linter: core::0132::request-unknown-fields=disabled
+  //     aip.dev/not-precedent: Labels are not a static set but can be added
+  //     or no longer used by producers as time goes on. As such, it makes sense
+  //     to be able to timebox the list of valid labels if searching for very
+  //     old log messages. --)
+  google.protobuf.Timestamp end_time = 6;
+}
+
+// Response message to list all values of a given label.
+message ListLabelValuesResponse {
+  // A list of all values for the given label.
+  // (-- api-linter: core::0132::response-unknown-fields=disabled
+  //     aip.dev/not-precedent: Labels values are strings and as such a simple
+  //     repeated string `values` is sufficient to describe all responses. --)
+  repeated string values = 1;
+
+  // A page token, received from a previous `ListLogs` call.
+  // Provide this value to retrieve the subsequent page.
+  //
+  // When paginating, all other parameters provided to `ListLogs` must match
+  // the call that provided the page token.
+  string next_page_token = 2;
+}
+
+// Request message to list logs in a given log stream.
+message ListLogsRequest {
+  // The project from which to list logs.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "logging.gdch.com/Project"
+  ];
+
+  // Filter to limit the scope of the logs based on Loki labels and times.
+  // (-- api-linter: core::0132::request-unknown-fields=disabled
+  //     aip.dev/not-precedent: A project is not sufficient to uniquely identify
+  //     a user's query to list label values, as Loki acts as a timeseries db with
+  //     logs separated by Project and Label keys. A project/label combination is
+  //     requried, and thus an unknown requester field must be specified. --)
+  ListLogsFilter logs_filter = 2;
+
+  // The maximum number of values to return. The service might return fewer values than
+  // what this field specifies.
+  //
+  // If unspecified, at most 100 labels are returned. The maximum value is `1000`.
+  // Values above `1000` are limited to `1000`.
+  int32 page_size = 3;
+
+  // A page token, received from a previous `ListLogs` call.
+  // Provide this value to retrieve the subsequent page.
+  //
+  // When paginating, all other parameters provided to `ListLogs` must match
+  // the call that provided the page token.
+  string page_token = 4;
+}
+
+// Message representing the filtering conditions on which log streams must
+// be returned from the `ListLogs` request.
+message ListLogsFilter {
+  // The values to which each log stream returned must have the label set.
+  map<string, string> labels_equal = 1;
+
+  // The values to which each log stream returned must not have the label set.
+  map<string, string> labels_not_equal = 2;
+
+  // The regular expression to which each log stream returned must have the label match.
+  map<string, string> labels_match_regex = 3;
+
+  // An indicator determining whether logs must be returned in ascending (oldest
+  // first) order.
+  bool order_ascending = 4;
+
+  // The earliest timestamp from which to start collecting logs.
+  google.protobuf.Timestamp start_time = 5;
+
+  // The latest timestamp from which to start collecting logs.
+  google.protobuf.Timestamp end_time = 6;
+}
+
+// Response method from the `ListLogs` function returning logs that match the
+// request conditions.
+message ListLogsResponse {
+  // The logs found in the time series database.
+  repeated Log logs = 1;
+
+  // A token, which can be sent as `page_token` to retrieve the next page.
+  // If this field is omitted, then no subsequent pages exist.
+  string next_page_token = 2;
+}
+
+// Message representing one log message.
+message Log {
+  // The time at which this log was produced.
+  google.protobuf.Timestamp produced_time = 1;
+
+  // The labels associated with the time series this log came from.
+  map<string, string> labels = 2;
+
+  // The log message, which is a key-value map.
+  string log = 3;
+}

@@ -1,0 +1,81 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+kubebuilder_analyze(
+    name = "mgmt_v1_typedata",
+    srcs = [
+        "annotation_consts.go",
+        "bucket_types.go",
+        "bucketinfo_types.go",
+        "condition_types.go",
+        "cors_policy_types.go",
+        "doc.go",
+        "groupversion_info.go",
+        "label_consts.go",
+        "lifecycle_policy_types.go",
+        "locking_policy_types.go",
+        "naming_consts.go",
+        "s3_credential_rotation_request_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":mgmt_v1_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "annotation_consts.go",
+        "bucket_conversion.go",
+        "bucket_types.go",
+        "bucketinfo_types.go",
+        "condition_types.go",
+        "cors_policy_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "label_consts.go",
+        "lifecycle_policy_types.go",
+        "locking_policy_types.go",
+        "naming_consts.go",
+        "s3_credential_rotation_request_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/object/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/conversion",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "object_test",
+    srcs = [
+        "bucket_types_test.go",
+        "bucketinfo_types_test.go",
+        "s3_credential_rotation_request_types_test.go",
+    ],
+    deps = [
+        ":v1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)

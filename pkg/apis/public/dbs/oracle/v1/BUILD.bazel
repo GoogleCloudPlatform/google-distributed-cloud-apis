@@ -1,0 +1,61 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "oracle_typedata",
+    srcs = [
+        "export_types.go",
+        "groupversion_info.go",
+        "import_types.go",
+        "instance_types.go",
+        "instancebackup_types.go",
+        "instancebackupplan_types.go",
+        "instancerestore_types.go",
+        "lockstore_types.go",
+        "release_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "oracle_api",
+    targets = [":oracle_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "oracle",
+    srcs = [
+        "export_types.go",
+        "groupversion_info.go",
+        "import_types.go",
+        "instance_types.go",
+        "instancebackup_types.go",
+        "instancebackupplan_types.go",
+        "instancerestore_types.go",
+        "lockstore_types.go",
+        "release_types.go",
+        "zz_generated.deepcopy.go",  # keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/oracle/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

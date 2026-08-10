@@ -1,0 +1,7 @@
+filegroup(
+    name = "srcs",
+    srcs = [
+        "//pkg/apis/core/v1alpha1:v1alpha1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)

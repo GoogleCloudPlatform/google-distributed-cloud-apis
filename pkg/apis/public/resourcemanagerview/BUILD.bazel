@@ -1,0 +1,7 @@
+filegroup(
+    name = "srcs",
+    srcs = [
+        "//pkg/apis/public/resourcemanagerview/v1alpha1:v1alpha1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)

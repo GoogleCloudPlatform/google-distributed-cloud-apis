@@ -1,0 +1,79 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "api_typedata",
+    srcs = [
+        "billingaccount_types.go",
+        "billingaccountreplica_types.go",
+        "doc.go",
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/billing/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/billing/v1:billing",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+mux_api_package(
+    name = "api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "BillingAccount",
+        "BillingAccountBinding",
+    ],
+    targets = [":api_typedata"],
+)
+
+kubebuilder_analyze(
+    name = "replica_typedata",
+    srcs = [
+        "billingaccountreplica_types.go",
+        "doc.go",
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/billing/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/billing/v1:billing",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_library(
+    name = "billing",
+    srcs = [
+        "billingaccount_types.go",
+        "billingaccountreplica_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  #keep
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/billing/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/billing/v1:billing",
+        "//pkg/apis/public/global",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

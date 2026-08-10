@@ -1,0 +1,69 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "alloydbomni_typedata",
+    srcs = [
+        "export_types.go",
+        "failover_types.go",
+        "groupversion_info.go",
+        "import_types.go",
+        "instance_types.go",
+        "instancebackup_types.go",
+        "instancebackupplan_types.go",
+        "instancehealth_types.go",
+        "instancerestore_types.go",
+        "lockstore_types.go",
+        "lrojob_types.go",
+        "replicationconfig_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/enterprise/ha/v1:ha",
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "alloydbomni_api",
+    targets = [":alloydbomni_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "alloydbomni",
+    srcs = [
+        "export_types.go",
+        "failover_types.go",
+        "groupversion_info.go",
+        "import_types.go",
+        "instance_types.go",
+        "instancebackup_types.go",
+        "instancebackupplan_types.go",
+        "instancehealth_types.go",
+        "instancerestore_types.go",
+        "lockstore_types.go",
+        "lrojob_types.go",
+        "replicationconfig_types.go",
+        "zz_generated.deepcopy.go",  # keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/alloydbomni/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/enterprise/ha/v1:ha",
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

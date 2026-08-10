@@ -1,0 +1,73 @@
+load("//build/rules/controller_gen:kubebuilder.bzl", "crdgen")
+
+filegroup(
+    name = "v1_srcs",
+    srcs = [
+        "//pkg/apis/public/logging/v1:v1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+filegroup(
+    name = "v1alpha1_srcs",
+    srcs = [
+        "//pkg/apis/public/logging/v1alpha1:v1alpha1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+exports_files(
+    [
+        "fleet-admin-conversion.yaml",
+        "root-admin-conversion.yaml",
+    ],
+)
+
+filegroup(
+    name = "conversion",
+    srcs = [
+        "log-admin-conversion.yaml",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+filegroup(
+    name = "conversion-mp",
+    srcs = [
+        "log-admin-conversion-mp.yaml",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+# these are the CRDs that are just available in the mgmt cluster. There should not be any non-mgmt crds in public.
+crdgen(
+    name = "mgmt_crds_yaml",
+    out = "public_mgmt_logging_crds.yaml",
+    annotations = {
+        "cert-manager.io/inject-ca-from": "obs-system/log-admin-webhooks-serving-cert",
+    },
+    conversion = "//pkg/apis/public/logging:conversion",
+    targets = [
+        "//pkg/apis/public/logging/v1:mgmt_v1_typedata",
+        "//pkg/apis/public/logging/v1alpha1:mgmt_v1alpha1_typedata",
+    ],
+    visibility = [
+        "//oc/log/subs/admin/manifests:__subpackages__",
+        "//oc/pnet/subs/core/internal/test:__subpackages__",
+    ],
+)
+
+# these are the same CRDs above except swaping out the conversion webhook logic to use urls and use the certificate annotations for MP (where everything is remote instead of using service references). Because the service defintion cannot be swapped out for a url in one step in HELM/K8s, for upgrades, we have to leave the original as is instead of moving everything to urls
+crdgen(
+    name = "mgmt_crds_yaml_for_mp",
+    out = "public_mgmt_logging_crds_mp.yaml",
+    annotations = {
+        "cert-manager.io/inject-ca-from-secret": "cert-manager/trust-store-internal-only",
+    },
+    conversion = "//pkg/apis/public/logging:conversion-mp",
+    targets = [
+        "//pkg/apis/public/logging/v1:mgmt_v1_typedata",
+        "//pkg/apis/public/logging/v1alpha1:mgmt_v1alpha1_typedata",
+    ],
+    visibility = ["//oc/log/subs/admin/manifests:__subpackages__"],
+)

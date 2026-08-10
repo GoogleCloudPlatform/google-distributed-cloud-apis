@@ -1,0 +1,9 @@
+include /owners/vmm_OWNERS.google
+per-file v1/virtualmachinebackup_types.go = file:/owners/backup_OWNERS.google
+per-file v1/virtualmachinebackupplan_types.go = file:/owners/backup_OWNERS.google
+per-file v1/virtualmachinerestorerequest_types.go = file:/owners/backup_OWNERS.google
+per-file v1/virtualmachinebackupplantemplate_types.go = file:/owners/backup_OWNERS.google
+per-file v1/virtualmachinerestore_types.go = file:/owners/backup_OWNERS.google
+per-file v1/virtualmachinebackuprequest_types.go = file:/owners/backup_OWNERS.google
+per-file v1/virtualmachinedeletebackuprequest_types.go = file:/owners/backup_OWNERS.google
+per-file v1/zz_generated.deepcopy.go = file:/owners/backup_OWNERS.google

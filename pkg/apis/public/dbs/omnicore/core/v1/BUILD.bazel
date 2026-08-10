@@ -1,0 +1,115 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "deepcopygen")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "core_typedata",
+    srcs = [
+        "certificate.go",
+        "dbc_condition.go",
+        "disk.go",
+        "endpoint_type.go",
+        "entity_types.go",
+        "export.go",
+        "externalserver.go",
+        "haproxy.go",
+        "import.go",
+        "incident_types.go",
+        "instance.go",
+        "instance_condition.go",
+        "instancebackup.go",
+        "instancebackupplan.go",
+        "instancehealth_types.go",
+        "instancerestore.go",
+        "instanceswitchover.go",
+        "keepalived.go",
+        "lock_data.go",
+        "migration.go",
+        "objectstore.go",
+        "omnisvc_instancebackup.go",
+        "omnisvc_instancebackupplan.go",
+        "pgbouncer_condition.go",
+        "pgbouncer_types.go",
+        "phase.go",
+        "replication.go",
+        "replicationconfig.go",
+        "sidecar.go",
+        "timewindow.go",
+        "utils.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/enterprise/common",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/api/resource",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client/apiutil",
+    ],
+)
+
+deepcopygen(
+    name = "core_deepcopy",
+    targets = [":core_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+write_source_files(
+    name = "core_deepcopy_copy",
+    files = {
+        "zz_generated.deepcopy.go": ":core_deepcopy",
+    },
+)
+
+go_library(
+    name = "core",
+    srcs = [
+        "certificate.go",
+        "dbc_condition.go",
+        "disk.go",
+        "endpoint_type.go",
+        "entity_types.go",
+        "export.go",
+        "externalserver.go",
+        "haproxy.go",
+        "import.go",
+        "incident_types.go",
+        "instance.go",
+        "instance_condition.go",
+        "instancebackup.go",
+        "instancebackupplan.go",
+        "instancehealth_types.go",
+        "instancerestore.go",
+        "instanceswitchover.go",
+        "keepalived.go",
+        "lock_data.go",
+        "migration.go",
+        "objectstore.go",
+        "omnisvc_instancebackup.go",
+        "omnisvc_instancebackupplan.go",
+        "pgbouncer_condition.go",
+        "pgbouncer_types.go",
+        "phase.go",
+        "replication.go",
+        "replicationconfig.go",
+        "sidecar.go",
+        "timewindow.go",
+        "utils.go",
+        "zz_generated.deepcopy.go",  # keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/enterprise/common",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/api/resource",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/client/apiutil",
+    ],
+)

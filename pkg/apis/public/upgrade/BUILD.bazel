@@ -1,0 +1,23 @@
+filegroup(
+    name = "v1_srcs",
+    srcs = [
+        "//pkg/apis/public/upgrade/v1:v1_api_srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+filegroup(
+    name = "v1_root_admin_types",
+    srcs = [
+        "//pkg/apis/public/upgrade/v1:root_admin_types",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "v1_org_admin_types",
+    srcs = [
+        "//pkg/apis/public/upgrade/v1:org_admin_types",
+    ],
+    visibility = ["//visibility:public"],
+)

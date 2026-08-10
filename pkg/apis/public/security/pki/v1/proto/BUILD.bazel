@@ -1,0 +1,53 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//build/rules:proto_gen.bzl", "gen_proto_go_code")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "pki_proto",
+    srcs = ["cas.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:timestamp_proto",
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:client_proto",
+        "@googleapis//google/api:field_behavior_proto",
+        "@googleapis//google/api:policy_proto",
+        "@googleapis//google/api:resource_proto",
+    ],
+)
+
+# "#keep" prevents gazelle from overwritting this rule. Gazelle removes the required
+# dep which prevents this from compiling.
+#keep
+go_proto_library(
+    name = "pki_go_proto",
+    compilers = ["//build/proto:go_grpc"],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security/pki/v1/proto",
+    proto = ":pki_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/google.golang.org/genproto/googleapis/api/annotations",  # buildifier: disable=LANG_proto_library-single-deps
+        "//vendor/google.golang.org/genproto/googleapis/api/serviceconfig",  # buildifier: disable=LANG_proto_library-single-deps
+        "//vendor/google.golang.org/protobuf/types/known/timestamppb",
+    ],
+)
+
+go_library(
+    name = "proto",
+    embed = [":pki_go_proto"],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security/pki/v1/proto",
+    visibility = ["//visibility:public"],
+)
+
+gen_proto_go_code(
+    name = "pki_go_proto_gen_srcs",
+    srcs = [":pki_go_proto"],
+    outs = [
+        "cas.pb.go",
+    ],
+)

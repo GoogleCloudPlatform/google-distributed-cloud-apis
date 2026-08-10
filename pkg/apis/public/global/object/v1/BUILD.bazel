@@ -1,0 +1,115 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "bucket_types.go",
+        "bucketlocation_types.go",
+        "bucketlocationreplica_types.go",
+        "doc.go",
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/object/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/object/v1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+kubebuilder_analyze(
+    name = "v1_root_typedata",
+    srcs = [
+        "bucket_types.go",
+        "bucketlocation_types.go",
+        "bucketlocationconfig_types.go",
+        "bucketlocationreplica_types.go",
+        "doc.go",
+        "groupversion_info.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/object/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/object/v1",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+mux_api_package(
+    name = "v1_api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "BucketLocation",
+    ],
+    targets = [
+        ":v1_typedata",
+        ":v1_root_typedata",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+kubebuilder_analyze(
+    name = "replica_typedata",
+    srcs = [
+        "bucketlocation_types.go",
+        "bucketlocationreplica_types.go",
+        "doc.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/object/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/public/object/v1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "bucket_types.go",
+        "bucketlocation_types.go",
+        "bucketlocationconfig_types.go",
+        "bucketlocationreplica_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  # keep
+        "groupversion_info.go",
+        "label_consts.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/object/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/object/v1",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "object_test",
+    srcs = ["bucketlocation_types_test.go"],
+    deps = [
+        ":v1",
+        "//vendor/github.com/google/go-cmp/cmp",
+    ],
+)

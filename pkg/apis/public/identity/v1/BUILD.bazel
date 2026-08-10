@@ -1,0 +1,72 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+# gazelle:exclude customrole_common_test.go
+
+kubebuilder_analyze(
+    name = "v1_typedata",
+    srcs = [
+        "customrole_common.go",
+        "customrole_types.go",
+        "doc.go",
+        "groupversion_info.go",
+        "identityproviderconfig_types.go",
+        "standardclusterrole_types.go",
+        "standardclusterrolebinding_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//pkg/apis/public/resourcemanager/v1alpha1",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "v1_api",
+    targets = [":v1_typedata"],
+)
+
+go_library(
+    name = "v1",
+    srcs = [
+        "annotations.go",
+        "condition_consts.go",
+        "customrole_common.go",  #keep
+        "customrole_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "groupversion_info.go",
+        "identityproviderconfig_types.go",
+        "interfaces.go",
+        "standardclusterrole_types.go",
+        "standardclusterrolebinding_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/identity/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/api/rbac/v1:rbac",  #keep
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    # keep
+    name = "v1_test",
+    srcs = ["customrole_common_test.go"],
+    embed = [":v1"],
+    deps = ["//vendor/k8s.io/api/rbac/v1:rbac"],
+)

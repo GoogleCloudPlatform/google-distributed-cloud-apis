@@ -1,0 +1,105 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//build/rules:global_api.bzl", "mux_api_package")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "api_typedata",
+    srcs = [
+        "customrole_common.go",
+        "customrole_types.go",
+        "customrolereplica_types.go",
+        "doc.go",
+        "iamrole_types.go",
+        "iamrolebinding_types.go",
+        "identityproviderconfig_types.go",
+        "identityproviderconfigreplica_types.go",
+        "zonalrolebinding_types.go",
+        "zonalrolebindingreplica_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/identity/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/private/ais/v2alpha1",
+        "//pkg/apis/public/identity/v1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+mux_api_package(
+    name = "api",
+    mux_dep = "//pkg/apis/common/global/v1alpha1",
+    mux_types = [
+        "IdentityProviderConfig",
+        "CustomRole",
+        "ZonalRoleBinding",
+    ],
+    targets = [":api_typedata"],
+)
+
+kubebuilder_analyze(
+    name = "replica_typedata",
+    srcs = [
+        "customrole_common.go",
+        "customrolereplica_types.go",
+        "doc.go",
+        "identityproviderconfigreplica_types.go",
+        "zonalrolebindingreplica_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/private/ais/v2alpha1",
+        "//pkg/apis/public/identity/v1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+    ],
+)
+
+go_library(
+    name = "identity",
+    srcs = [
+        "customrole_common.go",
+        "customrole_types.go",
+        "customrolereplica_types.go",
+        "doc.go",
+        "generated.deepcopy.go",  # keep
+        "generated.mux.go",  #keep
+        "groupversion_info.go",
+        "iamrole_types.go",
+        "iamrolebinding_types.go",
+        "identityproviderconfig_types.go",
+        "identityproviderconfigreplica_types.go",
+        "interfaces.go",
+        "zonalrolebinding_types.go",
+        "zonalrolebindingreplica_types.go",
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/identity/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/common/global/v1alpha1",
+        "//pkg/apis/core/v1alpha1",
+        "//pkg/apis/public/global",
+        "//pkg/apis/public/identity/v1",
+        "//pkg/apis/public/resourcemanager/v1:resourcemanager",
+        "//vendor/k8s.io/api/rbac/v1:rbac",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "identity_test",
+    srcs = ["customrole_common_test.go"],
+    embed = [":identity"],
+    deps = ["//vendor/k8s.io/api/rbac/v1:rbac"],
+)

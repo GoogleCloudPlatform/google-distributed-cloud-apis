@@ -1,0 +1,7 @@
+filegroup(
+    name = "srcs",
+    srcs = [
+        "//pkg/apis/public/migrate/v1alpha1:srcs",
+    ],
+    visibility = ["//:__subpackages__"],
+)

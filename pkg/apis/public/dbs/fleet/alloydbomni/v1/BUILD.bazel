@@ -1,0 +1,101 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
+load("//build/rules/controller_gen:kubebuilder.bzl", "api_package")
+
+# gazelle:exclude zz_generated.*.go
+
+kubebuilder_analyze(
+    name = "alloydbomni_typedata",
+    srcs = [
+        "backup_types.go",
+        "backupplan_types.go",
+        "createstandbyjob_types.go",
+        "dbcluster_types.go",
+        "dbclusterhealth_types.go",
+        "deletestandbyjob_types.go",
+        "export_types.go",
+        "externalserver_types.go",
+        "groupversion_info.go",
+        "import_types.go",
+        "migration_types.go",
+        "restore_types.go",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/alloydbomni/common",
+        "//pkg/apis/public/dbs/alloydbomni/metadata",
+        "//pkg/apis/public/dbs/alloydbomni/v1:alloydbomni",
+        "//pkg/apis/public/dbs/enterprise/backup/v1:backup",
+        "//pkg/apis/public/dbs/enterprise/backupplan/v1:backupplan",
+        "//pkg/apis/public/dbs/enterprise/common",
+        "//pkg/apis/public/dbs/enterprise/common/utils",
+        "//pkg/apis/public/dbs/enterprise/dbcluster/v1:dbcluster",
+        "//pkg/apis/public/dbs/enterprise/export/v1:export",
+        "//pkg/apis/public/dbs/enterprise/externalserver/v1:externalserver",
+        "//pkg/apis/public/dbs/enterprise/health/v1:health",
+        "//pkg/apis/public/dbs/enterprise/import/v1:import",
+        "//pkg/apis/public/dbs/enterprise/migration/v1:migration",
+        "//pkg/apis/public/dbs/enterprise/restore/v1:restore",
+        "//pkg/apis/public/dbs/enterprise/workflow/v1:workflow",
+        "//pkg/apis/public/dbs/fleet/fleet/v1:fleet",
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/util/intstr",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+api_package(
+    name = "alloydbomni_api",
+    targets = [":alloydbomni_typedata"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "alloydbomni",
+    srcs = [
+        "backup_types.go",
+        "backupplan_types.go",
+        "createstandbyjob_types.go",
+        "dbcluster_types.go",
+        "dbclusterhealth_types.go",
+        "deletestandbyjob_types.go",
+        "export_types.go",
+        "externalserver_types.go",
+        "groupversion_info.go",
+        "import_types.go",
+        "migration_types.go",
+        "restore_types.go",
+        "zz_generated.deepcopy.go",  # keep
+    ],
+    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/alloydbomni/v1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/apis/public/dbs/alloydbomni/common",
+        "//pkg/apis/public/dbs/alloydbomni/metadata",
+        "//pkg/apis/public/dbs/alloydbomni/v1:alloydbomni",
+        "//pkg/apis/public/dbs/enterprise/backup/v1:backup",
+        "//pkg/apis/public/dbs/enterprise/backupplan/v1:backupplan",
+        "//pkg/apis/public/dbs/enterprise/common",
+        "//pkg/apis/public/dbs/enterprise/common/utils",
+        "//pkg/apis/public/dbs/enterprise/dbcluster/v1:dbcluster",
+        "//pkg/apis/public/dbs/enterprise/export/v1:export",
+        "//pkg/apis/public/dbs/enterprise/externalserver/v1:externalserver",
+        "//pkg/apis/public/dbs/enterprise/health/v1:health",
+        "//pkg/apis/public/dbs/enterprise/import/v1:import",
+        "//pkg/apis/public/dbs/enterprise/migration/v1:migration",
+        "//pkg/apis/public/dbs/enterprise/restore/v1:restore",
+        "//pkg/apis/public/dbs/enterprise/workflow/v1:workflow",
+        "//pkg/apis/public/dbs/fleet/fleet/v1:fleet",
+        "//pkg/apis/public/dbs/omnicore/core/v1:core",
+        "//vendor/k8s.io/api/core/v1:core",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
+        "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
+        "//vendor/k8s.io/apimachinery/pkg/util/intstr",
+        "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)

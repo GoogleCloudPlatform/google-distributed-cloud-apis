@@ -15,7 +15,7 @@
 package v1alpha1
 
 import (
-	rmv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1"
+	rmv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1"
 )
 
 func ConvertClusterStatusFromV1(src []rmv1.ClusterStatus) []ClusterStatus {

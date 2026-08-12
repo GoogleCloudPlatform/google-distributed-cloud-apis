@@ -17,7 +17,7 @@ package v1
 import (
 	rbacv1 "k8s.io/api/rbac/v1"
 
-	identityv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/identity/v1"
+	identityv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/identity/v1"
 )
 
 type CustomRoleScopeType = identityv1.CustomRoleScopeType

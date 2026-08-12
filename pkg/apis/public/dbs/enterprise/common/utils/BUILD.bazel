@@ -6,7 +6,7 @@ go_library(
         "common.go",
         "consts.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/common/utils",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/common/utils",
     visibility = ["//visibility:public"],
     deps = ["//vendor/sigs.k8s.io/controller-runtime/pkg/client"],
 )

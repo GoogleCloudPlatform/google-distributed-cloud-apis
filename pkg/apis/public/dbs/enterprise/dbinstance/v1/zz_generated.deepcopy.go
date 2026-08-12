@@ -19,7 +19,7 @@
 package v1
 
 import (
-	omnicorecorev1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	omnicorecorev1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 	corev1 "k8s.io/api/core/v1"
 )
 

@@ -83,7 +83,7 @@ go_library(
         "vpntunnel_types.go",
         "zz_generated.deepcopy.go",  # keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/networking/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/networking/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",

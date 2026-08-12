@@ -26,6 +26,7 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:path=cloudnatmappings,singular=cloudnatmapping
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +gdcloud:manifest:relevant=false,oc=unet
 type CloudNATMapping struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

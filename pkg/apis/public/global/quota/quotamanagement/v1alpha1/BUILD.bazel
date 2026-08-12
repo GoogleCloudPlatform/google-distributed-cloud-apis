@@ -70,7 +70,7 @@ go_library(
         "zz_generated.deepcopy.go",  # keep
         "zz_generated.mux.go",  #keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/quota/quotamanagement/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/quota/quotamanagement/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",

@@ -17,8 +17,8 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	eebackupplanapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/backupplan/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eebackupplanapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/backupplan/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 const BackupPlanLabel = "postgresql.dbadmin.goog/backupplan"

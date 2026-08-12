@@ -18,10 +18,10 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	eeexportapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/export/v1"
-	eehaapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/ha/v1"
-	eeimportapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/import/v1"
-	cecoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eeexportapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/export/v1"
+	eehaapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/ha/v1"
+	eeimportapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/import/v1"
+	cecoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 type DBClusterPhase string

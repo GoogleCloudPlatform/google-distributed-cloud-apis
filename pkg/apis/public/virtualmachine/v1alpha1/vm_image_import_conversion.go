@@ -21,8 +21,8 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
-	v1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/virtualmachine/v1"
-	vmviewv1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/virtualmachineview/v1alpha1"
+	v1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/virtualmachine/v1"
+	vmviewv1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/virtualmachineview/v1alpha1"
 )
 
 // ConvertTo converts this VirtualMachineImageImport to the Hub version (v1).

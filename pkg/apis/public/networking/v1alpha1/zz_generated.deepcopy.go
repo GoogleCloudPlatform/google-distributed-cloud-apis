@@ -19,7 +19,7 @@
 package v1alpha1
 
 import (
-	resourcemanagerv1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1alpha1"
+	resourcemanagerv1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"

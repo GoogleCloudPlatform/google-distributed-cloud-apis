@@ -15,9 +15,9 @@
 package v1
 
 import (
-	eerestoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/restore/v1"
-	fleetapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/fleet/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eerestoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/restore/v1"
+	fleetapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/fleet/fleet/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

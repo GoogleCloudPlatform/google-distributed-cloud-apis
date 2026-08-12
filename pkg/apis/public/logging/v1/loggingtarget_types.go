@@ -82,6 +82,18 @@ type LoggingTargetSelectors struct {
 type LoggingTargetStatus struct {
 	// A list of conditions observed in the logging stack.
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
+	// Status of the logging target in each cluster.
+	// +listType=map
+	// +listMapKey=clusterName
+	// +optional
+	ClusterStatuses []ClusterStatus `json:"clusterStatuses,omitempty"`
+}
+
+type ClusterStatus struct {
+	ClusterName string      `json:"clusterName"`
+	Ready       bool        `json:"ready"`
+	Message     string      `json:"message,omitempty"`
+	LastUpdate  metav1.Time `json:"lastUpdate,omitempty"`
 }
 
 // +kubebuilder:object:root=true

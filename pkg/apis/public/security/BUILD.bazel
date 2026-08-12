@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "security",
     srcs = ["constants.go"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/security",
     visibility = ["//visibility:public"],
     deps = ["//pkg/apis/public"],
 )

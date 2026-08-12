@@ -38,7 +38,7 @@ go_library(
         "rollout_types.go",
         "status_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/common/global/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/common/global/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",

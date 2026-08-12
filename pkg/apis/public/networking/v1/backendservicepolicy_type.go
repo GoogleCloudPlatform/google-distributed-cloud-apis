@@ -17,7 +17,7 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	corev1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
+	corev1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
 )
 
 // +genclient
@@ -32,6 +32,11 @@ import (
 //
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status"
 // +kubebuilder:printcolumn:name="SessionAffinity",type="string",JSONPath=".spec.sessionAffinity"
+// +gdcloud:manifest:relevant=true,oc=unet,component=compute,entities="backend-service-policies"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:external-load-balancer-admin,internal-load-balancer-admin,load-balancer-developer,load-balancer-admin"
+// +gdcloud:manifest:rbac="describe,list:external-load-balancer-viewer,internal-load-balancer-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type BackendServicePolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

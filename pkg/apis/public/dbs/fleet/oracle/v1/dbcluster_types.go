@@ -18,14 +18,14 @@ Copyright 2021.
 package v1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/common"
-	pkgcommon "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/common/utils"
-	eedbcapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/dbcluster/v1"
-	fleetapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/fleet/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
-	consts "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/oracle/consts"
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/oracle/metadata"
-	oracleapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/oracle/v1"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/common"
+	pkgcommon "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/common/utils"
+	eedbcapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/dbcluster/v1"
+	fleetapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/fleet/fleet/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
+	consts "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/oracle/consts"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/oracle/metadata"
+	oracleapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/oracle/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"

@@ -18,7 +18,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	rmv1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1alpha1"
+	rmv1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1alpha1"
 )
 
 // Note: Global and Zonal FlowTagger does not share spec.
@@ -32,6 +32,7 @@ import (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:shortName={ft,fts}
+// +gdcloud:manifest:relevant=false,oc=unet
 type FlowTagger struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

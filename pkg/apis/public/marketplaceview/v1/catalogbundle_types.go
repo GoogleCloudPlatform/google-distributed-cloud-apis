@@ -17,7 +17,7 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	globalmarketplacev1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/marketplace/v1"
+	globalmarketplacev1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/marketplace/v1"
 )
 
 // +kubebuilder:object:root=true

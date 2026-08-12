@@ -19,7 +19,7 @@ import (
 
 	logmonv1alpha1 "sigs.k8s.io/cluster-operators/logmon-operator/api/v1alpha1"
 
-	v1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1"
+	v1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/logging/v1"
 )
 
 // ConvertTo converts this LoggingTarget to the Hub version (v1).

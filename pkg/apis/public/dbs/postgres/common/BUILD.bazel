@@ -6,7 +6,7 @@ go_library(
         "config.go",
         "db_common.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/postgres/common",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/postgres/common",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public/dbs/omnicore/core/v1:core",

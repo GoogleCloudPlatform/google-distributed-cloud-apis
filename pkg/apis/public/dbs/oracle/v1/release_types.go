@@ -45,6 +45,7 @@ type ReleaseStatus struct {
 // +kubebuilder:object:root=true
 // +kubebuilder:storageversion
 // +kubebuilder:printcolumn:JSONPath=".spec.version",name="Release",type="string"
+// +gdcloud:manifest:relevant=false,oc=dbs
 
 // Release is the Schema for the releases API.
 type Release struct {

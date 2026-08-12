@@ -19,7 +19,7 @@
 package v1
 
 import (
-	marketplacev1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/marketplace/v1"
+	marketplacev1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/marketplace/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 

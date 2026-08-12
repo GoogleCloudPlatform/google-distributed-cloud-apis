@@ -32,7 +32,7 @@ go_library(
         "groupversion_info.go",
         "types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/featuregate/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/featuregate/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

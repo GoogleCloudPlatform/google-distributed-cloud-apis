@@ -15,7 +15,7 @@
 package v1
 
 import (
-	eehaapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/ha/v1"
+	eehaapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/ha/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -37,6 +37,7 @@ type FailoverStatus struct {
 //+kubebuilder:printcolumn:JSONPath=`.status.state`,name="state",type="string"
 //+kubebuilder:printcolumn:JSONPath=".status.internal.phase",name="phase",type="string"
 //+kubebuilder:printcolumn:JSONPath=".spec.dbclusterRef",name="dbcluster",type="string"
+// +gdcloud:manifest:relevant=false,oc=dbs
 
 // Failover is the Schema for the failover API.
 type Failover struct {

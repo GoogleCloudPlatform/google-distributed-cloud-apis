@@ -21,6 +21,7 @@ import (
 // +genclient
 // +kubebuilder:object:root=true
 // +kubebuilder:storageversion
+// +gdcloud:manifest:relevant=false,oc=uporc
 
 // MaintenanceWindow specifies a recurring time window for applying for patch and minor version upgrades.
 type MaintenanceWindow struct {

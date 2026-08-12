@@ -7,7 +7,7 @@
 package {{package}}
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/common/global/v1alpha1"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/common/global/v1alpha1"
 )
 // +generated:end:preamble
 

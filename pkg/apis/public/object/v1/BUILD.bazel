@@ -53,7 +53,7 @@ go_library(
         "naming_consts.go",
         "s3_credential_rotation_request_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/object/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/object/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",

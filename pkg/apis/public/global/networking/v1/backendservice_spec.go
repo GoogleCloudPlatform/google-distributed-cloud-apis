@@ -15,7 +15,7 @@
 package v1
 
 import (
-	networkingv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/networking/v1"
+	networkingv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/networking/v1"
 )
 
 // Note: Global and Zonal BackendService does not share spec.

@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "consts",
     srcs = ["consts.go"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/oracle/consts",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/oracle/consts",
     visibility = ["//visibility:public"],
     deps = ["//pkg/apis/public/dbs/omnicore/dbdaemon/consts"],
 )

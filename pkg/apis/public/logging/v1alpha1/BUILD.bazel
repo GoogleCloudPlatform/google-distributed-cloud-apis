@@ -53,7 +53,7 @@ go_library(
         "loggingtarget_conversion.go",
         "loggingtarget_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/logging/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

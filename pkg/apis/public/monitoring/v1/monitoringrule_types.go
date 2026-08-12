@@ -15,8 +15,9 @@
 package v1
 
 import (
-	corev1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	corev1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
 )
 
 // Defines the specification or expected state of the `MonitoringRule` object.

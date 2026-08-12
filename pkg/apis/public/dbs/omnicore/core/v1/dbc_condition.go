@@ -72,6 +72,10 @@ const (
 	// L2ShadowNamespaceDeleted
 	// True when the shadow namespace in L2 is deleted. False otherwise.
 	L2ShadowNamespaceDeleted ConditionType = "L2ShadowNamespaceDeleted"
+
+	// DatabaseCertificateReady
+	// True when the database certificate is ready. False otherwise.
+	DatabaseCertificateReady ConditionType = "DatabaseCertificateReady"
 )
 
 // Condition reason for ConditionType=Provisioned on database cluster status condition
@@ -145,4 +149,11 @@ const (
 	EndpointsAssigned            ConditionReason = "EndpointsAssigned"
 	EndpointsAssigningInProgress ConditionReason = "EndpointsAssigningInProgress"
 	EndpointsError               ConditionReason = "EndpointsError"
+)
+
+// Condition reason for ConditionType=DatabaseCertificateReady on database cluster status condition
+const (
+	DatabaseCertificateIssued    ConditionReason = "DatabaseCertificateIssued"
+	DatabaseCertificateRequested ConditionReason = "DatabaseCertificateRequested"
+	DatabaseCertificateError     ConditionReason = "DatabaseCertificateError"
 )

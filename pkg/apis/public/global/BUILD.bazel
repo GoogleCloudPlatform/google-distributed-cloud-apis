@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "global",
     srcs = ["constants.go"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global",
     visibility = ["//visibility:public"],
     deps = ["//pkg/apis/public"],
 )

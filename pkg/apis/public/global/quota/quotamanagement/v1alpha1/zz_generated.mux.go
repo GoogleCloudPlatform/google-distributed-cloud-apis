@@ -20,7 +20,7 @@
 package v1alpha1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/common/global/v1alpha1"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/common/global/v1alpha1"
 )
 
 var _ v1alpha1.MuxReplicaInterface = &QuotaDefinitionReplica{}

@@ -24,6 +24,7 @@ import (
 // +kubebuilder:storageversion
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Namespaced,shortName=si
+// +gdcloud:manifest:relevant=false,oc=ez
 
 // SaasInstance represents an single instance of a Saas service.
 type SaasInstance struct {

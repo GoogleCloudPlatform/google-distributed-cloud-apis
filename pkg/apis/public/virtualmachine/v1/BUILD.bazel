@@ -141,7 +141,7 @@ go_library(
         "vm_network.go",
         "vm_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/virtualmachine/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/virtualmachine/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",

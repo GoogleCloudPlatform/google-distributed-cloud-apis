@@ -18,7 +18,7 @@ import (
 	"path/filepath"
 	"time"
 
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 	corev1 "k8s.io/api/core/v1"
 )
 

@@ -57,7 +57,7 @@ go_library(
         "groupversion_info.go",
         "zz_generated.deepcopy.go",  # keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/gemini/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/gemini/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

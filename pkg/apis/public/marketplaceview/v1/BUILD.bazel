@@ -36,7 +36,7 @@ go_library(
         "generated.deepcopy.go",  # keep
         "groupversion_info.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/marketplaceview/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/marketplaceview/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

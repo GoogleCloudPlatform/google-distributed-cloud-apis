@@ -14,7 +14,7 @@
 
 package v1
 
-import occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+import occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 
 //+kubebuilder:object:generate=true
 

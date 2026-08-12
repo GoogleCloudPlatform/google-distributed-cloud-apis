@@ -27,6 +27,11 @@ import (
 // +kubebuilder:storageversion
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:subresource:status
+// +gdcloud:manifest:relevant=true,oc=unet,component=networking,entities="flow-logs"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:flowlog-admin"
+// +gdcloud:manifest:rbac="describe,list:flowlog-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type FlowLog struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

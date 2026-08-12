@@ -106,7 +106,7 @@ kubebuilder_analyze(
         "projectrolebinding_types.go",
         "projectserviceaccount_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",
@@ -126,7 +126,7 @@ kubebuilder_analyze(
         "tagkey_types.go",
         "tagvalue_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",
@@ -175,7 +175,7 @@ go_library(
         "tagvalue_types.go",
         "timeout_consts.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",

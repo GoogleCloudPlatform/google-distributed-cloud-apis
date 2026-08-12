@@ -48,7 +48,7 @@ go_library(
         "node_pool.go",
         "userclusterupgraderequest_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/cluster/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/cluster/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",

@@ -17,7 +17,7 @@ package v1alpha2
 import (
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
-	arv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/artifactregistry/v1"
+	arv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/artifactregistry/v1"
 )
 
 // convertTo converts this HarborInstanceProject (v1alpha2) to the Hub version (v1).

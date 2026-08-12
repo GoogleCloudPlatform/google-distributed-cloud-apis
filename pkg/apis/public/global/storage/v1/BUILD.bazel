@@ -11,7 +11,7 @@ kubebuilder_analyze(
         "volumereplicationrelationship_types.go",
         "volumereplicationrelationshipreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/storage/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/storage/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",
@@ -35,7 +35,7 @@ kubebuilder_analyze(
     srcs = [
         "volumereplicationrelationshipreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/storage/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/storage/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",
@@ -57,7 +57,7 @@ go_library(
         "volumereplicationrelationshipreplica_types.go",
         ":generated.deepcopy.go",  #keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/storage/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/storage/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",

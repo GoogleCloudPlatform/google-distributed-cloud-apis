@@ -24,6 +24,7 @@ import (
 // +kubebuilder:resource:shortName=onp
 // OrganizationNetworkPolicy is the Schema for the organizationnetworkpolicies API.
 // +genclient
+// +gdcloud:manifest:relevant=false,oc=unet
 type OrganizationNetworkPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

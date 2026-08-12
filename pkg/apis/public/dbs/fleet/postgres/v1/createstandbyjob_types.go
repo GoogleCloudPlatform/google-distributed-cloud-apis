@@ -15,8 +15,8 @@
 package v1
 
 import (
-	eeworkflowapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/workflow/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eeworkflowapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/workflow/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -25,6 +25,7 @@ import (
 // +kubebuilder:printcolumn:JSONPath=`.spec.attempt`,name="Attempt",type="integer"
 // +kubebuilder:printcolumn:JSONPath=`.spec.endTime`,name="EndTime",type="string"
 // +kubebuilder:printcolumn:JSONPath=`.spec.cleanup`,name="Cleanup",type="boolean"
+// +gdcloud:manifest:relevant=false,oc=dbs
 // CreateStandbyJob is an internal workflow tracking object. Users should not directly interact with this.
 type CreateStandbyJob struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -19,7 +19,7 @@
 package v1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )

@@ -100,6 +100,7 @@ type MaintenancePolicyStatus struct {
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Namespaced,shortName=mp
+// +gdcloud:manifest:relevant=false,oc=ez
 
 type MaintenancePolicy struct {
 	metav1.TypeMeta   `json:",inline"`

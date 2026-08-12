@@ -39,7 +39,7 @@ go_library(
         "saasinstance.go",
         "zz_generated.deepcopy.go",  # keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/easysaas/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/fleet/easysaas/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/apimachinery/pkg/api/meta",

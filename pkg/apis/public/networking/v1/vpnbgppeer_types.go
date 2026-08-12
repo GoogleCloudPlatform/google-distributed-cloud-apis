@@ -32,6 +32,11 @@ import (
 // +kubebuilder:printcolumn:name="Remote IP",type="string",JSONPath=".spec.remote.ip"
 // +kubebuilder:printcolumn:name="Remote ASN",type="string",JSONPath=".spec.remote.asn"
 // +kubebuilder:printcolumn:name="State",type="string",JSONPath=".status.state"
+// +gdcloud:manifest:relevant=true,oc=unet,component=networking,entities="vpn-bgp-peers"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:vpn-admin"
+// +gdcloud:manifest:rbac="describe,list:vpn-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type VPNBGPPeer struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

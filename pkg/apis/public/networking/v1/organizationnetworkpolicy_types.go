@@ -18,7 +18,7 @@ import (
 	networkingv1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	corev1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
+	corev1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
 )
 
 // +kubebuilder:object:root=true
@@ -27,6 +27,10 @@ import (
 // +kubebuilder:resource:shortName=onp
 // Defines the Schema for the `OrganizationNetworkPolicy` API.
 // +genclient
+// +gdcloud:manifest:relevant=true,oc=unet,component=networking,entities="organization-network-policies"
+// +gdcloud:manifest:verbs=create;delete;describe;update
+// +gdcloud:manifest:rbac="create,delete,describe,update:org-network-policy-admin"
+// +gdcloud:manifest:skipcodegen=true
 type OrganizationNetworkPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

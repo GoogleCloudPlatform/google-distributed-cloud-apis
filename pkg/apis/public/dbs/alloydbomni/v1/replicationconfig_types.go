@@ -17,7 +17,7 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 // +kubebuilder:object:root=true
@@ -30,6 +30,7 @@ import (
 // +kubebuilder:printcolumn:JSONPath=`.status.conditions[?(@.type=="Healthy")].status`,name="Healthy",type="string"
 // +kubebuilder:printcolumn:JSONPath=`.status.physicalUpstream.synchronousEnabled`,name="PUpstream",type="boolean"
 // +kubebuilder:printcolumn:JSONPath=`.status.physicalDownstream.synchronousEnabled`,name="PDownstream",type="boolean"
+// +gdcloud:manifest:relevant=false,oc=dbs
 type ReplicationConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

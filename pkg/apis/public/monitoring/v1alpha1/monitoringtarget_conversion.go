@@ -17,7 +17,7 @@ package v1alpha1
 import (
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
-	v1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/monitoring/v1"
+	v1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/monitoring/v1"
 )
 
 // ConvertTo converts this MonitoringTarget to the Hub version (v1).

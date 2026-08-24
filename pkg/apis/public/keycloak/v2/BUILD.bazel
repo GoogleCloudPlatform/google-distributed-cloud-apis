@@ -37,7 +37,7 @@ go_library(
         "groupversion_info.go",
         "managedkeycloak_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/keycloak/v2",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/keycloak/v2",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",

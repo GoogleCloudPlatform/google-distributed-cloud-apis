@@ -17,7 +17,7 @@ package v1
 import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 // +kubebuilder:object:generate=true

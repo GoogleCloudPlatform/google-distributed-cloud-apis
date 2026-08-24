@@ -30,7 +30,7 @@ go_library(
         "global_subnet_types.go",
         "groupversion_info.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/ipam/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/ipam/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public/global",

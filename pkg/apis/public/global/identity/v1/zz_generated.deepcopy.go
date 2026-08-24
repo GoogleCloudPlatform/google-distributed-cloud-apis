@@ -19,9 +19,9 @@
 package v1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
-	identityv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/identity/v1"
-	resourcemanagerv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/resourcemanager/v1"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
+	identityv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/identity/v1"
+	resourcemanagerv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/resourcemanager/v1"
 	rbacv1 "k8s.io/api/rbac/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"

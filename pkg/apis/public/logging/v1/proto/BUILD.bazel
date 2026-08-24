@@ -27,7 +27,7 @@ proto_library(
 go_proto_library(
     name = "logging_go_proto",
     compilers = ["//build/proto:go_grpc"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1/proto",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/logging/v1/proto",
     proto = ":logging_proto",
     deps = [
         "//vendor/google.golang.org/protobuf/types/known/timestamppb",  # buildifier: disable=LANG_proto_library-single-deps
@@ -41,7 +41,7 @@ go_proto_library(
 go_library(
     name = "proto",
     embed = [":logging_go_proto"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1/proto",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/logging/v1/proto",
     deps = [
         "//vendor/google.golang.org/genproto/googleapis/api/annotations",
     ],

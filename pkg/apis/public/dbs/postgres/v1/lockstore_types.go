@@ -15,7 +15,7 @@
 package v1
 
 import (
-	v1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	v1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -23,6 +23,7 @@ import (
 
 // +kubebuilder:object:root=true
 // +kubebuilder:storageversion
+// +gdcloud:manifest:relevant=false,oc=dbs
 // LockStore holds current operation data.
 type LockStore struct {
 	metav1.TypeMeta   `json:",inline"`

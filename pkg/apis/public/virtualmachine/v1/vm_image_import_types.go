@@ -28,6 +28,9 @@ const (
 	// ConditionTypeVMIISucceeded tracks the end-to-end import, translation, and caching phases.
 	ConditionTypeVMIISucceeded = "Succeeded"
 
+	// ConditionTypeVMIITimeout tracks if any phase of the import timed out.
+	ConditionTypeVMIITimeout = "Timeout"
+
 	// ConditionTypeVMIIReady is the top-level summary condition.
 	//
 	// Deprecated: Ready is legacy. Use the new condition types.
@@ -76,7 +79,27 @@ const (
 	ReasonVMIIImportJobPending          = "ImportJobPending"
 	ReasonVMIIImportJobInProgress       = "ImportJobInProgress"
 	ReasonVMIIImageCacheInProgress      = "ImageCacheInProgress"
+
+	// Applies to timeouts.
+	ReasonVMIICreationTimeout    = "CreationTimeout"
+	ReasonVMIITranslationTimeout = "TranslationTimeout"
+	ReasonVMIIImageUploadTimeout = "ImageUploadTimeout"
+	ReasonVMIIDeletionTimeout    = "DeletionTimeout"
 )
+
+// VirtualMachineImageImportTransitionKey represents a transition key for VirtualMachineImageImport.
+type VirtualMachineImageImportTransitionKey string
+
+// VirtualMachineImageImportTransitionTime represents a transition time with a key.
+type VirtualMachineImageImportTransitionTime struct {
+	// Transition is the transition key.
+	// +kubebuilder:validation:Required
+	Transition VirtualMachineImageImportTransitionKey `json:"transition"`
+
+	// Time is the last transition time.
+	// +kubebuilder:validation:Required
+	Time metav1.Time `json:"time"`
+}
 
 // Represents the operation to import and convert
 // VM resources that contain data; for example, to import and convert
@@ -150,6 +173,12 @@ type VirtualMachineImageImportStatus struct {
 	// The image is in the same namespace as the image import.
 	ImageName string `json:"imageName,omitempty"`
 
+	// Last transition time of each transition.
+	// +optional
+	// +listType=map
+	// +listMapKey=transition
+	TransitionTime []VirtualMachineImageImportTransitionTime `json:"transitionTime,omitempty"`
+
 	// A list of any errors that occurred during the reconciliation of this resource.
 	// +optional
 	Errors []VMMError `json:"errors,omitempty"`
@@ -216,6 +245,30 @@ type VirtualMachineImageImportList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 
 	Items []VirtualMachineImageImport `json:"items"`
+}
+
+// GetTransitionTime returns the transition time for the specified key if present.
+func (s *VirtualMachineImageImportStatus) GetTransitionTime(key VirtualMachineImageImportTransitionKey) (metav1.Time, bool) {
+	for _, t := range s.TransitionTime {
+		if t.Transition == key {
+			return t.Time, true
+		}
+	}
+	return metav1.Time{}, false
+}
+
+// SetTransitionTime sets or updates the transition time for the specified key.
+func (s *VirtualMachineImageImportStatus) SetTransitionTime(key VirtualMachineImageImportTransitionKey, t metav1.Time) {
+	for i, tt := range s.TransitionTime {
+		if tt.Transition == key {
+			s.TransitionTime[i].Time = t
+			return
+		}
+	}
+	s.TransitionTime = append(s.TransitionTime, VirtualMachineImageImportTransitionTime{
+		Transition: key,
+		Time:       t,
+	})
 }
 
 func init() {

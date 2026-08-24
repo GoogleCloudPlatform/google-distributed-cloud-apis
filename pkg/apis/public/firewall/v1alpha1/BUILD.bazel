@@ -34,7 +34,7 @@ go_library(
         "generated.deepcopy.go",  # keep
         "groupversion_info.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/firewall/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/firewall/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

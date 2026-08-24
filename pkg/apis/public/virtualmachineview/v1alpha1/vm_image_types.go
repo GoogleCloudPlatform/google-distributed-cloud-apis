@@ -34,6 +34,7 @@ const (
 	Windows_2022  OSName = "windows-2022"
 	Windows_2025  OSName = "windows-2025"
 	Windows_10    OSName = "windows-10"
+	Windows_11    OSName = "windows-11"
 	RHEL_8        OSName = "rhel-8"
 	ROCKY_LINUX_8 OSName = "rocky-linux-8"
 	ROCKY_LINUX_9 OSName = "rocky-linux-9"
@@ -47,6 +48,7 @@ var SupportedOSNames = sets.NewString(
 	string(Windows_2022),
 	string(Windows_2025),
 	string(Windows_10),
+	string(Windows_11),
 	string(RHEL_8),
 	string(ROCKY_LINUX_8),
 	string(ROCKY_LINUX_9),

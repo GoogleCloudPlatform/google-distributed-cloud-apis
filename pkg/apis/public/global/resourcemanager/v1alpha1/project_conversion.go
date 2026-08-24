@@ -17,7 +17,7 @@ package v1alpha1
 import (
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
-	rmv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/resourcemanager/v1"
+	rmv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/resourcemanager/v1"
 )
 
 // ConvertTo converts this Project to the Hub version (v1).

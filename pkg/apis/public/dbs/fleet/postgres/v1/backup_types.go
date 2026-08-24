@@ -17,9 +17,9 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	eebackupapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/backup/v1"
-	fleetapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/fleet/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eebackupapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/backup/v1"
+	fleetapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/fleet/fleet/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 const BackupLabel = "postgresql.dbadmin.goog/backup"

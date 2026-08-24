@@ -11,7 +11,7 @@ kubebuilder_analyze(
         "marketplaceservices_types.go",
         "marketplaceservicesreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/marketplace/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/marketplace/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",
@@ -39,7 +39,7 @@ kubebuilder_analyze(
         "doc.go",
         "marketplaceservicesreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/marketplace/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/marketplace/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",
@@ -58,7 +58,7 @@ go_library(
         "marketplaceservices_types.go",
         "marketplaceservicesreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/marketplace/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/marketplace/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",

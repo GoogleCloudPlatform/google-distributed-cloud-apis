@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 load("//build/rules:global_api.bzl", "mux_api_package")
 load("//build/rules/controller_gen:aspect.bzl", "kubebuilder_analyze")
 
@@ -12,7 +12,7 @@ kubebuilder_analyze(
         "managedsiem_types.go",
         "managedsiemreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/siem/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/siem/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",
@@ -30,7 +30,7 @@ kubebuilder_analyze(
         "doc.go",
         "managedsiemreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/siem/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/siem/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/core/v1alpha1",
@@ -50,6 +50,7 @@ mux_api_package(
 go_library(
     name = "v1alpha1",
     srcs = [
+        "condition.go",
         "doc.go",
         "generated.deepcopy.go",  # keep
         "generated.mux.go",  # keep
@@ -57,7 +58,7 @@ go_library(
         "managedsiem_types.go",
         "managedsiemreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/siem/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/siem/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",
@@ -68,5 +69,14 @@ go_library(
         "//vendor/k8s.io/apimachinery/pkg/runtime",  # keep
         "//vendor/k8s.io/apimachinery/pkg/runtime/schema",
         "//vendor/sigs.k8s.io/controller-runtime/pkg/scheme",
+    ],
+)
+
+go_test(
+    name = "v1alpha1_test",
+    srcs = ["condition_test.go"],
+    embed = [":v1alpha1"],
+    deps = [
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:meta",
     ],
 )

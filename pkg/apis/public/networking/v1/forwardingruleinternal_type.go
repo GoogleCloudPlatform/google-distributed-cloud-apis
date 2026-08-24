@@ -18,7 +18,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	corev1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
+	corev1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
 )
 
 // +genclient
@@ -33,6 +33,11 @@ import (
 // +kubebuilder:printcolumn:name="BackendService",type="string",JSONPath=".spec.backendServiceRef.name"
 // +kubebuilder:printcolumn:name="CIDR",type="string",JSONPath=".status.cidr"
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status"
+// +gdcloud:manifest:relevant=true,oc=unet,component=compute,entities="forwarding-rules"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:internal-load-balancer-admin,load-balancer-admin"
+// +gdcloud:manifest:rbac="describe,list:internal-load-balancer-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type ForwardingRuleInternal struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

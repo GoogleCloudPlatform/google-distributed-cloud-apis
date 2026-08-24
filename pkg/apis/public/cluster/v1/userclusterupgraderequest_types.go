@@ -18,7 +18,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	upgradev1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/upgrade/v1"
+	upgradev1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/upgrade/v1"
 )
 
 // +genclient

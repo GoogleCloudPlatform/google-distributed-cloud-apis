@@ -18,7 +18,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	vmviewv1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/virtualmachineview/v1alpha1"
+	vmviewv1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/virtualmachineview/v1alpha1"
 )
 
 // VirtualMachineImageImport represents the operation to import and convert

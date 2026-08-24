@@ -35,6 +35,11 @@ import (
 // +kubebuilder:printcolumn:name="VPNBGPPeer",type="string",JSONPath=".spec.vpnBGPPeer.name"
 // +kubebuilder:printcolumn:name="PSK",type="string",JSONPath=".spec.ikeKey.name"
 // +kubebuilder:printcolumn:name="State",type="string",JSONPath=".status.state"
+// +gdcloud:manifest:relevant=true,oc=unet,component=networking,entities="vpn-tunnels"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:vpn-admin"
+// +gdcloud:manifest:rbac="describe,list:vpn-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type VPNTunnel struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "externalserver",
     srcs = ["externalserver.go"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/externalserver/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/externalserver/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public/dbs/omnicore/core/v1:core",

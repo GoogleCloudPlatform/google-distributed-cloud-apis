@@ -31,9 +31,9 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	eeexportapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/export/v1"
-	fleetapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/fleet/fleet/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eeexportapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/export/v1"
+	fleetapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/fleet/fleet/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 // +kubebuilder:object:generate=true

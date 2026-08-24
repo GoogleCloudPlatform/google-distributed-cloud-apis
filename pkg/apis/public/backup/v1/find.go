@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	objectv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/object/v1"
+	objectv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/object/v1"
 )
 
 // GetBackupRepositoryName will return the name of the backup repository to which the provided object

@@ -20,7 +20,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
 option csharp_namespace = "Goog.Gdc.Kms.V1";
-option go_package = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1/proto;kms";
+option go_package = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/kms/v1/proto;kms";
 option ruby_package = "Goog::Gdc::Kms::V1";
 option java_package = "goog.gdc.kms.v1";
 option java_multiple_files = true;

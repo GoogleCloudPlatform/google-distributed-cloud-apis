@@ -39,7 +39,7 @@ go_library(
         "dbcluster_types.go",
         "zz_generated.deepcopy.go",  # keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/dbcluster/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/dbcluster/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public/dbs/enterprise/export/v1:export",

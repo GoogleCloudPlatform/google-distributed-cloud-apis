@@ -34,7 +34,7 @@ go_library(
         "groupversion_info.go",
         "hsm_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/hsm/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/hsm/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

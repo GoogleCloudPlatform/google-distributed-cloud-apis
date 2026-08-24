@@ -48,7 +48,7 @@ go_library(
         "projectnetworkpolicy_types.go",
         "validation.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/networking/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/networking/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

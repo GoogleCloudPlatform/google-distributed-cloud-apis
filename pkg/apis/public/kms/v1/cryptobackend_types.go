@@ -19,13 +19,12 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// CryptoBackendType defines the cryptographic provider type (e.g., "ThalesLunaHSM", "SoftHSM").
-// +kubebuilder:validation:Enum:=ThalesLunaHSM;SoftHSM
+// CryptoBackendType defines the cryptographic provider type (e.g., "ThalesLunaHSM").
+// +kubebuilder:validation:Enum:=ThalesLunaHSM
 type CryptoBackendType string
 
 const (
 	CryptoBackendTypeThalesLunaHSM CryptoBackendType = "ThalesLunaHSM"
-	CryptoBackendTypeSoftHSM       CryptoBackendType = "SoftHSM"
 )
 
 // +genclient

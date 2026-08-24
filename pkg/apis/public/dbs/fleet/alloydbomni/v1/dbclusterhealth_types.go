@@ -15,8 +15,8 @@
 package v1
 
 import (
-	eehealthapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/health/v1"
-	occoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	eehealthapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/health/v1"
+	occoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -29,6 +29,7 @@ type DBClusterHealthStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
+// +gdcloud:manifest:relevant=false,oc=dbs
 type DBClusterHealth struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

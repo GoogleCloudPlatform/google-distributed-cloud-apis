@@ -29,7 +29,7 @@
 // Package consts provides common Oracle constants across the entire Data Plane.
 package consts
 
-import occonst "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/dbdaemon/consts"
+import occonst "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/dbdaemon/consts"
 
 // Listener is an Oracle listener struct
 type Listener struct {

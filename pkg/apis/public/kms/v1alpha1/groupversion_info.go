@@ -15,7 +15,7 @@
 package v1alpha1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/public"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/controller-runtime/pkg/scheme"
 )

@@ -31,6 +31,20 @@ const (
 	// MZGlobalNamespaceAnnotation is the annotation that indicates the related global namespace.
 	MZGlobalNamespaceAnnotation = "kms.gdc.goog/mz-global-namespace"
 
+	// InternalCryptoBackendTypeAnnotation is the annotation key used on a CryptoBackend
+	// resource to instruct the reconciler to use a specific internal provider
+	// logic path (e.g., "SoftHSM") instead of the default production type.
+	// This is for internal testing and CI/CD ONLY and should not be used by end-users.
+	InternalCryptoBackendTypeAnnotation = "kms.gdc.goog/internal-cryptobackend-type"
+
+	// SoftHSMPartitionLabelAnnotation is the annotation key for specifying the token label
+	// for the internal SoftHSM backend. The KMS service will use this to find the correct slot.
+	SoftHSMPartitionLabelAnnotation = "softhsm.internal.kms.gdc.goog/partition-label"
+
+	// SoftHSMEndpointAnnotation is the annotation key for specifying the direct connection
+	// endpoint for the internal SoftHSM cryptobackend service.
+	SoftHSMEndpointAnnotation = "softhsm.internal.kms.gdc.goog/endpoint"
+
 	// SecretTypeKMSRootKeyLocal contains a list of versioned root key materials.
 	// Required fields:
 	// - Secret.Data["active-key-material"] - key material that will be used for new wrap operations.

@@ -48,7 +48,7 @@ go_library(
         "release_types.go",
         "zz_generated.deepcopy.go",  # keep
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/oracle/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/oracle/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public/dbs/omnicore/core/v1:core",

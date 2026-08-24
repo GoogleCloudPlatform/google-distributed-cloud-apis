@@ -15,8 +15,8 @@
 package v1
 
 import (
-	common "gke-internal.googlesource.com/private-cloud/pkg/apis/common/global/v1alpha1"
-	billing "gke-internal.googlesource.com/private-cloud/pkg/apis/public/billing/v1"
+	common "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/common/global/v1alpha1"
+	billing "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/billing/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

@@ -30,6 +30,11 @@ import (
 // +kubebuilder:printcolumn:name="BackendService",type="string",JSONPath=".spec.backendServiceRef.name"
 // +kubebuilder:printcolumn:name="CIDR",type="string",JSONPath=".status.cidr"
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status"
+// +gdcloud:manifest:relevant=true,oc=unet,component=compute,entities="forwarding-rules-external"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:external-load-balancer-admin,load-balancer-admin"
+// +gdcloud:manifest:rbac="describe,list:external-load-balancer-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type ForwardingRuleExternal struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

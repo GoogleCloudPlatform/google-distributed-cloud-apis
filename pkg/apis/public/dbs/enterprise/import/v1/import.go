@@ -15,10 +15,10 @@
 package v1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/common"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/common"
 	ctrlclient "sigs.k8s.io/controller-runtime/pkg/client"
 
-	cecoreapi "gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/omnicore/core/v1"
+	cecoreapi "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/omnicore/core/v1"
 )
 
 //+kubebuilder:object:generate=true

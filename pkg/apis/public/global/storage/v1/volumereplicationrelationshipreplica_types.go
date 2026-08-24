@@ -19,7 +19,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	globalv1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/common/global/v1alpha1"
+	globalv1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/common/global/v1alpha1"
 )
 
 // Leaving this in serves as a check to ensure VolumeReplicationRelationshipReplica properly implements a MuxReplica

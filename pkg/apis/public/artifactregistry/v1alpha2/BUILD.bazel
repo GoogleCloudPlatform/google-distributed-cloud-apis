@@ -40,7 +40,7 @@ go_library(
         "harbor_instance_project_conversion.go",
         "harbor_instance_project_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/artifactregistry/v1alpha2",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/artifactregistry/v1alpha2",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

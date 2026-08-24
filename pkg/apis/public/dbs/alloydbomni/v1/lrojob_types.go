@@ -20,6 +20,7 @@ import (
 )
 
 // +kubebuilder:object:root=true
+// +gdcloud:manifest:relevant=false,oc=dbs
 // LROJob is an internal object that helps single-thread LRO jobs.
 type LROJob struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -54,7 +54,7 @@ go_library(
         "monitoringtarget_conversion.go",
         "monitoringtarget_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/monitoring/v1alpha1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/monitoring/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

@@ -59,6 +59,13 @@ const (
 // CertificateRef contains a reference to a certificate secret and a key for the
 // CA certificate.
 type CertificateRef struct {
+	// ReissuanceRevision represents the last successful revision used to
+	// trigger certificate reissuance through the cert-reissue-revision
+	// annotation.
+	// +optional
+	// nullon(samwise-fleet,samwise-local)
+	ReissuanceRevision int `json:"reissuanceRevision,omitempty"`
+
 	// SecretRef is a reference to the secret that contains the database server
 	// certificate.
 	// +optional

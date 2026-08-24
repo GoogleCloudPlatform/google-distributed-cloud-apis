@@ -14,7 +14,7 @@
 
 package security
 
-import "gke-internal.googlesource.com/private-cloud/pkg/apis/public"
+import "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public"
 
 const (
 	Group = "security." + public.Group

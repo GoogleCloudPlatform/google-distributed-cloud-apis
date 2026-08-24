@@ -19,8 +19,8 @@
 package v1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
-	objectv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/object/v1"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
+	objectv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/object/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )

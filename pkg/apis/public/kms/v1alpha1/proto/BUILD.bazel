@@ -21,7 +21,7 @@ proto_library(
 go_proto_library(
     name = "kms_go_proto",
     compilers = ["//build/proto:go_grpc"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1alpha1/proto",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/kms/v1alpha1/proto",
     proto = ":kms_proto",
     deps = ["@org_golang_google_genproto_googleapis_api//annotations"],
 )
@@ -29,7 +29,7 @@ go_proto_library(
 go_library(
     name = "proto",
     embed = [":kms_go_proto"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1alpha1/proto",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/kms/v1alpha1/proto",
 )
 
 gen_proto_go_code(

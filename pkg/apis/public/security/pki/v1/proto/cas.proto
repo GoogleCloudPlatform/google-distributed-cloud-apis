@@ -23,7 +23,7 @@ import "google/api/resource.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security/pki/v1/proto;pki";
+option go_package = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/security/pki/v1/proto;pki";
 option java_outer_classname = "CasProto";
 option java_multiple_files = true;
 option java_package = "goog.gdc.security.pki.v1";

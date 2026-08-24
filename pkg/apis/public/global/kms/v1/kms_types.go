@@ -17,7 +17,7 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	kmspublicv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/kms/v1"
+	kmspublicv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/kms/v1"
 )
 
 // +genclient

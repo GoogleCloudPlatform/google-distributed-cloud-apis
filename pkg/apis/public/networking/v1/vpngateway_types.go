@@ -29,6 +29,11 @@ import (
 // +kubebuilder:printcolumn:name="Interface0 Name",type="string",JSONPath=".spec.interfaces[0].name"
 // +kubebuilder:printcolumn:name="Interface0 IP",type="string",JSONPath=".status.interfaces[0].ip"
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status"
+// +gdcloud:manifest:relevant=true,oc=unet,component=networking,entities="vpn-gateways"
+// +gdcloud:manifest:verbs=create;delete;describe;list;update
+// +gdcloud:manifest:rbac="create,delete,describe,list,update:vpn-admin"
+// +gdcloud:manifest:rbac="describe,list:vpn-viewer"
+// +gdcloud:manifest:skipcodegen=true
 type VPNGateway struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

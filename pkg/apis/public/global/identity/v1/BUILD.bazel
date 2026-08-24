@@ -18,7 +18,7 @@ kubebuilder_analyze(
         "zonalrolebinding_types.go",
         "zonalrolebindingreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/identity/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/identity/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",
@@ -81,7 +81,7 @@ go_library(
         "zonalrolebinding_types.go",
         "zonalrolebindingreplica_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/global/identity/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/global/identity/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/common/global/v1alpha1",

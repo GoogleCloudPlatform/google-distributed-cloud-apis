@@ -17,7 +17,7 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	ipamv1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/ipam/v1"
+	ipamv1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/ipam/v1"
 )
 
 // Represents the request and allocation information of a global IP address range in CIDR format.

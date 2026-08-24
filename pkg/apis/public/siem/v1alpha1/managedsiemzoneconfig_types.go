@@ -21,7 +21,7 @@ import (
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +gdcloud:manifest:relevant=true,oc=siem,component=siem,entities="zonal-config"
+// +gdcloud:manifest:relevant=true,oc=siem,component=siem,entities="zonal-configs"
 // +gdcloud:manifest:verbs=create;delete;describe;list;update
 // +gdcloud:manifest:rbac="create,delete,describe,list,update:siem-instance-admin"
 // +gdcloud:manifest:rbac="describe,list:siem-instance-viewer"

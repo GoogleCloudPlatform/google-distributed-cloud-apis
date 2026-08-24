@@ -31,6 +31,31 @@ const (
 	// Indicates VMEA is updated to latest configuration.
 	ReasonUpdated = "Updated"
 
+	// IngressReady Condition
+
+	// ConditionTypeVMEAIngressReady indicates whether the external LoadBalancer resources
+	// are provisioned and the IP address is allocated.
+	ConditionTypeVMEAIngressReady    = "IngressReady"
+	ReasonIngressConfigured          = "IngressConfigured"
+	ReasonIngressFailed              = "IngressFailed"
+	ReasonIngressConfigurationFailed = "IngressConfigurationFailed"
+	ReasonIngressDisabled            = "IngressDisabled"
+	ReasonIngressCleanupFailed       = "IngressCleanupFailed"
+	ReasonIngressIPPending           = "IngressIPPending"
+	ReasonIngressResourcesPending    = "IngressResourcesPending"
+
+	// EgressReady Condition
+
+	// ConditionTypeVMEAEgressReady indicates whether the Egress NAT is established
+	// and the project-level IP is confirmed.
+	ConditionTypeVMEAEgressReady    = "EgressReady"
+	ReasonEgressConfigured          = "EgressConfigured"
+	ReasonEgressFailed              = "EgressFailed"
+	ReasonEgressConfigurationFailed = "EgressConfigurationFailed"
+	ReasonEgressDisabled            = "EgressDisabled"
+	ReasonEgressCleanupFailed       = "EgressCleanupFailed"
+	ReasonEgressIPPending           = "EgressIPPending"
+
 	// Message for 'Ready' condition.
 	// Indicates whether the VMEA is waiting for VM to start.
 	MessageWaitingForVMStart = "waiting for VM to start"
@@ -50,6 +75,16 @@ const (
 	MessageFailedDisablingIngress = "failed to disable ingress"
 	// Indicates error encountered while disabling egress.
 	MessageFailedDisablingEgress = "failed to disable egress"
+
+	// Event Reasons
+
+	EventReasonVirtualMachineNotFound = "VirtualMachineNotFound"
+	EventReasonEnablingIngressFailed  = "EnablingIngressFailed"
+	EventReasonEnablingEgressFailed   = "EnablingEgressFailed"
+	EventReasonEgressIPFetchFailed    = "EgressIPFetchFailed"
+	EventReasonUpdatedEgressIP        = "UpdatedEgressIP"
+	EventReasonUpdatedIngressIP       = "UpdatedIngressIP"
+	EventReasonDisabledExternalAccess = "DisabledExternalAccess"
 )
 
 // Represents the request of accessing the external

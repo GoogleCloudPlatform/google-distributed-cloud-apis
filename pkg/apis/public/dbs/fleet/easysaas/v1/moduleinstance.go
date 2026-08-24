@@ -42,6 +42,7 @@ import (
 // +kubebuilder:printcolumn:JSONPath=`.spec.release`,name="Target Release",type="string"
 // +kubebuilder:printcolumn:JSONPath=`.status.release`,name="Current Release",type="string"
 // +kubebuilder:printcolumn:JSONPath=`.spec.upgradeScheduledAt`,name="Upgrade Scheduled At",type="string"
+// +gdcloud:manifest:relevant=false,oc=ez
 type ModuleInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

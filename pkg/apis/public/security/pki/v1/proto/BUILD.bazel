@@ -27,7 +27,7 @@ proto_library(
 go_proto_library(
     name = "pki_go_proto",
     compilers = ["//build/proto:go_grpc"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security/pki/v1/proto",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/security/pki/v1/proto",
     proto = ":pki_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -40,7 +40,7 @@ go_proto_library(
 go_library(
     name = "proto",
     embed = [":pki_go_proto"],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/security/pki/v1/proto",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/security/pki/v1/proto",
     visibility = ["//visibility:public"],
 )
 

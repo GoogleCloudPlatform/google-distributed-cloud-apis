@@ -17,7 +17,7 @@ package v1alpha1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	networkingv1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/public/networking/v1alpha1"
+	networkingv1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/networking/v1alpha1"
 )
 
 // +genclient

@@ -36,6 +36,7 @@ const (
 	Windows2022 OSName = "windows-2022"
 	Windows2025 OSName = "windows-2025"
 	Windows10   OSName = "windows-10"
+	Windows11   OSName = "windows-11"
 	RHEL8       OSName = "rhel-8"
 	RockyLinux8 OSName = "rocky-linux-8"
 	RockyLinux9 OSName = "rocky-linux-9"
@@ -53,6 +54,7 @@ var SupportedOSNames = sets.NewString(
 	string(Windows2022),
 	string(Windows2025),
 	string(Windows10),
+	string(Windows11),
 	string(RHEL8),
 	string(RockyLinux8),
 	string(GardenLinux),
@@ -73,6 +75,7 @@ var WindowsServerOSNames = sets.NewString(
 // WindowsClientOSNames are the valid OS names for Windows Client images.
 var WindowsClientOSNames = sets.NewString(
 	string(Windows10),
+	string(Windows11),
 )
 
 // ImportableWindowsOSNames are the valid Windows OS names for BYO image import.

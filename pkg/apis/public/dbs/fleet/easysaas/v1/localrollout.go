@@ -34,6 +34,7 @@ import (
 // +kubebuilder:printcolumn:JSONPath=`.spec.paused`,name="Paused",type="string"
 // +kubebuilder:printcolumn:JSONPath=`.status.conditions[?(@.type=="InProgress")].status`,name="In Progress",type="string"
 // +kubebuilder:printcolumn:JSONPath=`.status.conditions[?(@.type=="Finished")].status`,name="Finished",type="string"
+// +gdcloud:manifest:relevant=false,oc=ez
 type LocalRollout struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -36,7 +36,7 @@ go_library(
         "labels.go",
         "subnet_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/ipam/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/ipam/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

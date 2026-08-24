@@ -71,7 +71,7 @@ go_library(
         "siemorgforwarder_types.go",
         "siemprojectforwarder_types.go",
     ],
-    importpath = "gke-internal.googlesource.com/private-cloud/pkg/apis/public/logging/v1",
+    importpath = "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/logging/v1",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/apis/public",

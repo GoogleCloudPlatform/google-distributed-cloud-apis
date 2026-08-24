@@ -17,7 +17,7 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	corev1alpha1 "gke-internal.googlesource.com/private-cloud/pkg/apis/core/v1alpha1"
+	corev1alpha1 "github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/core/v1alpha1"
 )
 
 // +genclient
@@ -44,7 +44,8 @@ type CertificateAuthority struct {
 // +kubebuilder:validation:XValidation:rule="(has(self.secretConfig) && has(self.secretConfig.secretName) && size(self.secretConfig.secretName) > 0) != has(self.kmsConfig)",message="Only one of secretConfig or kmsConfig must be set at a time"
 type CertificateAuthoritySpec struct {
 	// The profile of the CertificateAuthority.
-	CAProfile CACertificateProfile `json:"caProfile"`
+	// +optional
+	CAProfile *CACertificateProfile `json:"caProfile,omitempty"`
 
 	// The CA Certificate provisioning configuration.
 	CACertificate CACertificateConfig `json:"caCertificate"`
@@ -162,7 +163,13 @@ type CACertificateConfig struct {
 	// Issue a SubCA certificate from a GDC-managed CA. (Managed Sub CA)
 	// +optional
 	ManagedSubCA *ManagedSubCAConfig `json:"managedSubCA,omitempty"`
+
+	// Adopt a pre-existing key and certificate. (Imported CA)
+	// +optional
+	ImportedCA *ImportedCAConfig `json:"importedCA,omitempty"`
 }
+
+type ImportedCAConfig struct{}
 
 type ExternalCAConfig struct {
 	// Stores a signed certificate signed by external root CA.
@@ -175,7 +182,8 @@ type SignedCertificateConfig struct {
 	Certificate []byte `json:"certificate"`
 
 	// The PEM encoded x509 certificate of the signer CA used to sign the certificate.
-	CA []byte `json:"ca"`
+	// +optional
+	CA []byte `json:"ca,omitempty"`
 }
 
 // SelfSignedCAConfig defines the configuration for a Root CA certificate.

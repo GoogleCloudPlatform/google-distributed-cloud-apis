@@ -29,6 +29,10 @@ import (
 // +kubebuilder:printcolumn:name="Interface0 Name",type="string",JSONPath=".spec.interfaces[0].name"
 // +kubebuilder:printcolumn:name="Interface0 IP",type="string",JSONPath=".spec.interfaces[0].ip"
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status"
+// +gdcloud:manifest:relevant=true,oc=unet,component=networking,entities="peer-gateways"
+// +gdcloud:manifest:verbs=delete
+// +gdcloud:manifest:rbac="delete:vpn-admin"
+// +gdcloud:manifest:skipcodegen=true
 type PeerGateway struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

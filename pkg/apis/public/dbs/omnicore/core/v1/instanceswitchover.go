@@ -15,7 +15,7 @@
 package v1
 
 import (
-	"gke-internal.googlesource.com/private-cloud/pkg/apis/public/dbs/enterprise/common"
+	"github.com/googlecloudplatform/google-distributed-cloud-apis/pkg/apis/public/dbs/enterprise/common"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

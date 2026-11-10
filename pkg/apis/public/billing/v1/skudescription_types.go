@@ -100,7 +100,7 @@ type Price struct {
 	Tiers []PriceTier `json:"tiers,omitempty"`
 }
 
-// Based off of http://cs/symbol:google.type.Money.
+// Based off of google.type.Money.
 
 // Money represents an amount of money with its currency type.
 type Money struct {

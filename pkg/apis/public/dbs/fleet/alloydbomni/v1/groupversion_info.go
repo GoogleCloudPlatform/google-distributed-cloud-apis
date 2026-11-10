@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*
-Copyright 2021.
-*/
 
 // Package v1 contains API Schema definitions for the alloydbomni v1 API group
 

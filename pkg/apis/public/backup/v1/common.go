@@ -94,8 +94,6 @@ const (
 	Portable            VolumeStrategy = "Portable"
 )
 
-// NOTE(apsherid): interface not supported, though is default way of expressing one-of's by go_proto, replaced with apiextensions.JSON, see here: https://yaqs.corp.google.com/eng/q/1598751479437459456
-
 // Defines which namespaces and applications to back up.
 type BackupScope struct {
 	// Specifies whether all namespaces are backed up.
